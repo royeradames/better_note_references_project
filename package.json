@@ -1,0 +1,33 @@
+{
+  "name": "better_note_references_project",
+  "version": "1.0.0",
+  "description": "Building a hub for my lambda school bookmark tab and class notes",
+  "main": "index.js",
+  "dependencies": {
+    "express": "^4.17.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "server": "nodemon index.js",
+    "start": "node index.js",
+    "test": "cross-env DB_ENV=testing jest --watch --verbose --runInBand"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/royeradames/better_note_references_project.git"
+  },
+  "keywords": [
+    "better",
+    "note",
+    "references",
+    "project",
+    "Royer",
+    "Adames"
+  ],
+  "author": "Royer Adames",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/royeradames/better_note_references_project/issues"
+  },
+  "homepage": "https://github.com/royeradames/better_note_references_project#readme"
+}

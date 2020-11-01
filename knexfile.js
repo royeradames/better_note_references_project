@@ -5,7 +5,20 @@ module.exports = {
   development: {
     client: 'sqlite3',
     connection: {
+      directory: "./db",
       filename: './dev.sqlite3'
+    },
+    migrations: {
+      directory: "./db/migration",
+      tableName: "knex_migrations"
+    },
+    seeds: {
+      directory: "./db/seeds"
+    },
+    pool: {
+      afterCreate: (conn, done) => {
+        conn.run(`PRAGMA foreign_key = ON`, done)
+      }
     }
   },
   testing: {
@@ -13,11 +26,18 @@ module.exports = {
     connection: {
       filename: ':memory:'
     },
+    migrations: {
+      directory: "./db/migrations",
+      tableName: "knex_migrations"
+    },
+    seeds: {
+      directory: "./db/seeds"
+    },
     pool: {
       afterCreate: (conn, done) => {
         conn.run(`PRAGMA foreign_key = ON`, done)
       }
-    }
+    },
   },
 
   staging: {

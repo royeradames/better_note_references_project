@@ -6,7 +6,7 @@ exports.up = function(knex) {
       table.binary("image")
       table.text("alt_text")
   })
-    knex.schema.createTable("libraries", (table) => {
+  knex.schema.createTable("libraries", (table) => {
     table.increments("id")
     table.text("name")
     table.text("description")
@@ -36,5 +36,11 @@ exports.up = function(knex) {
 }
 
 exports.down = function(knex) {
-  
+    return knex.schema
+    .dropTable("images")
+    .dropTable("libraries")
+    .dropTable("useful_links")
+    .dropTable("tags")
+    .dropTable("posts")
+    .dropTable("post_images")
 }

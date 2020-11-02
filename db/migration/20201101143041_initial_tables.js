@@ -1,37 +1,58 @@
 
 exports.up = function(knex) {
-  knex.schema.createTable("images", (table) => {
+  return knex.schema
+  .createTable("images", (table) => {
       table.increments("id")
       table.text("name")
       table.binary("image")
       table.text("alt_text")
   })
-  knex.schema.createTable("libraries", (table) => {
+  .createTable("libraries", (table) => {
     table.increments("id")
     table.text("name")
     table.text("description")
-    table.foreign("image_id").references("id").inTable("images")
+    table.integer("image_id")
+        .unsigned()
+        .references("images.id")
+        .onDelete("RESTRICT")
+        .onUpdate("CASCADE")
     table.text("tags")
   })
-  knex.schema.createTable("useful_links", table => {
+  .createTable("useful_links", table => {
       table.increments("id")
       table.text("name")
       table.text("url")
   })
-  knex.schema.createTable("tags", (table) => {
+  .createTable("tags", (table) => {
       table.text("name").primary().unique().notNullable()
-      table.foreign("libary_id").references("id").inTable("libraries")
-      table.foreign("useful_link").references("id").inTable("useful_links")
+      table.integer("libary_id")
+        .unsigned()
+        .references("libraries.id")
+        .onDelete("RESTRICT")
+        .onUpdate("CASCADE")
+      table.integer("useful_link")
+        .unsigned()
+        .references("useful_links.id")
+        .onDelete("RESTRICT")
+        .onUpdate("CASCADE")
   })
-  knex.schema.createTable("posts", table =>{
+  .createTable("posts", table =>{
       table.increments("id")
       table.text("title")
       table.text("content")
   })
-  knex.schema.createTable("post_images", table =>{
+  .createTable("post_images", table =>{
     table.increments("id")
-    table.foreign("id").references("id").inTable("posts")
-    table.foreign("id").references("id").inTable("images")
+    table.integer("post_id")
+        .unsigned()
+        .references("posts.id")
+        .onDelete("RESTRICT")
+        .onUpdate("CASCADE")
+    table.integer("image_id")
+        .unsigned()
+        .references("images.id")
+        .onDelete("RESTRICT")
+        .onUpdate("CASCADE")
   })
 }
 

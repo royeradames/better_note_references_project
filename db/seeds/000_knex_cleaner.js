@@ -1,4 +1,3 @@
-//import cleaner from "knex-cleaner"
 const cleaner = require("knex-cleaner")
 
 function cleanTables(knex){
@@ -10,7 +9,6 @@ function cleanTables(knex){
         })
 }
 
-// export default function(knex){
 exports.seed = function (knex){
     /*
         a recent version of sqlite3 broke knex-cleaner functionality when foreign keys are enabled, so we're temporarily disabling foreign keys when running the seeds against sqlite3.

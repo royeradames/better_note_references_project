@@ -4,5 +4,6 @@ exports.seed = function(knex) {
       return knex('tags').insert([
         {name: 'frontend'},
         {name: 'backend'},
+        {name: 'general'},
       ]);
 };

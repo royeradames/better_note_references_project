@@ -3,8 +3,8 @@ exports.up = function(knex) {
   return knex.schema
   .createTable("images", (table) => {
       table.increments("id")
-      table.text("name")
-      table.binary("image")
+      table.text("name").notNullable()
+      table.binary("image").notNullable()
       table.text("alt_text")
   })
   .createTable("tags", (table) => {
@@ -28,9 +28,10 @@ exports.up = function(knex) {
   })
   .createTable("useful_links", table => {
       table.increments("id")
-      table.text("name")
-      table.text("url")
-      table.text("tag_name")
+      table.text("name").notNullable()
+      table.text("description").notNullable()
+      table.text("url").notNullable()
+      table.text("tag_name").notNullable()
         .unsigned()
         .references("tags.name")
         .onDelete("RESTRICT")

@@ -92,5 +92,65 @@ exports.seed = function(knex) {
           tag_name: "backend",
           link: "https://jestjs.io/docs/en/getting-started"
         },
+        {
+          name: 'cypress',
+          description: "End to end testing framework, assertion library, with mocking and stubbing for the browser.",
+          tag_name: "frontend",
+          link: "https://docs.cypress.io/api/api/table-of-contents.html"
+        },
+        {
+          name: 'styled components',
+          description: "Style components on the same file.",
+          tag_name: "frontend",
+          link: "https://styled-components.com/"
+        },
+        {
+          name: 'react-router',
+          description: "Link pages in React.",
+          tag_name: "frontend",
+          link: "https://reactrouter.com/web/example/basic"
+        },
+        {
+          name: 'yup',
+          description: "Schema builder for value parsing and validation. Define a schea, transform a value to match, validate the shape of an existing value, or both.",
+          tag_name: "frontend",
+          link: "https://www.npmjs.com/package/yup"
+        },
+        {
+          name: 'axios',
+          description: "Promise based HTTP client for the browser and node.js.",
+          tag_name: "general",
+          link: "https://www.npmjs.com/package/axios"
+        },
+        {
+          name: 'fkill',
+          description: "Stops program that are use your port.",
+          tag_name: "backend",
+          link: "https://www.npmjs.com/package/fkill-cli"
+        },
+        {
+          name: 'jest-dom',
+          description: "Extends jest to make testing the DOM easier.",
+          tag_name: "frontend",
+          link: "https://www.npmjs.com/package/@testing-library/jest-dom"
+        },
+        {
+          name: 'redux',
+          description: "Manage and distribute React statages though the whole app. Use them when you want to move states 2 layers or more.",
+          tag_name: "frontend",
+          link: "https://www.npmjs.com/package/redux"
+        },
+        {
+          name: 'react-redux',
+          description: "Make react understand redux.",
+          tag_name: "frontend",
+          link: "https://www.npmjs.com/package/react-redux"
+        },
+        {
+          name: 'redux-thunk',
+          description: "Wrap an expression and delay its evaluation. The thunk can be used to delay the dispatch of an action, or to dispatch only if a centain condition is met. Thunk is the past-tense of think. Useful for redux connectand not necessary for redux hooks.",
+          tag_name: "frontend",
+          link: "https://www.npmjs.com/package/redux-thunk"
+        },
       ]);
 };

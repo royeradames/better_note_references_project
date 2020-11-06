@@ -152,5 +152,23 @@ exports.seed = function(knex) {
           tag_name: "frontend",
           link: "https://www.npmjs.com/package/redux-thunk"
         },
+        {
+          name: 'redux-logger',
+          description: "lets you replay problems as if they happened in your own browser by automatically  console logging it in your console.",
+          tag_name: "frontend",
+          link: "https://www.npmjs.com/package/redux-logger"
+        },
+        {
+          name: 'axios-retry',
+          description: "Axios plugin that intercepts failed requests and retries them whenever possible.",
+          tag_name: "frontend",
+          link: "npmjs.com/package/axios-retry"
+        },
+        {
+          name: 'react-hook-form',
+          description: "Performant, flexible and extensible forms with easy-to-use validation.",
+          tag_name: "frontend",
+          link: "https://www.npmjs.com/package/react-hook-form"
+        },
       ]);
 };

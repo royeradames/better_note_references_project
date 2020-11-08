@@ -27,3 +27,10 @@ it("/:id 404 invalid id", async () => {
     expect(res.status).toBe(404)
     expect(res.body.error).toEqual(expect.any(String))
 })
+
+it("/findlibrarybyname/:name", async (req, res, next) => {
+    const res = await request(server).post("/libraries/findlibrarybyname/express")
+
+    expect(res.status).toBe(200)
+    expect(res.body.library).toMatch(expect.any(Object))
+})

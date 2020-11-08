@@ -31,7 +31,7 @@ exports.up = function(knex) {
       table.text("name").notNullable()
       table.text("description").notNullable()
       table.text("url").notNullable()
-      table.text("video").
+      table.text("video")
       table.text("tag_name").notNullable()
         .unsigned()
         .references("tags.name")

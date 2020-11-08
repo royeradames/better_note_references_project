@@ -170,5 +170,11 @@ exports.seed = function(knex) {
           tag_name: "frontend",
           link: "https://www.npmjs.com/package/react-hook-form"
         },
+        {
+          name: 'React Testing Library',
+          description: "Simple and complete React DOM testing utilities that encourage good testing practices.",
+          tag_name: "frontend",
+          link: "https://www.npmjs.com/package/@testing-library/react"
+        },
       ]);
 };

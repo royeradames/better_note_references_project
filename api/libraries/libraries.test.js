@@ -22,15 +22,21 @@ it("/:id 200 valid id found in server", async () => {
 })
 
 it("/:id 404 invalid id", async () => {
-    const res = await request(server).post("/libraries/a")
+    const res = await request(server).get("/libraries/a")
 
     expect(res.status).toBe(404)
     expect(res.body.error).toEqual(expect.any(String))
 })
 
-it("/findlibrarybyname/:name", async (req, res, next) => {
-    const res = await request(server).post("/libraries/findlibrarybyname/express")
+it("/findlibrarybyname/:name 200 given name IS ON database", async () => {
+    const res = await request(server).get("/libraries/findlibrarybyname/express")
 
     expect(res.status).toBe(200)
     expect(res.body.library).toMatch(expect.any(Object))
+})
+it("/findlibrarybyname/:name 404  given name NOT on database", async () => {
+    const res = await request(server).get("/libraries/findlibrarybyname/notalibraryonthedatabase")
+
+    expect(res.status).toBe(404)
+    expect(res.body.error).toMatch(expect.any(String))
 })

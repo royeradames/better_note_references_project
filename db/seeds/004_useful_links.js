@@ -57,7 +57,7 @@ exports.seed = function(knex) {
         },
         {
           name: 'How do I collapse sections of code in visual studio code for windows?',
-          description: "Fold: Ctrl + Shift + [\n Unfold: Ctrl + Shift + ]\nFold All: Ctrl + (K 0)\nUnfold All: Ctrl + (k j)",
+          description: "Fold: Ctrl + Shift + [\nUnfold: Ctrl + Shift + ]\nFold All: Ctrl + (K 0)\nUnfold All: Ctrl + (k j)",
           url: "https://stackoverflow.com/questions/30067767/how-do-i-collapse-sections-of-code-in-visual-studio-code-for-windows/46597272",
           tag_name: "general",
         },

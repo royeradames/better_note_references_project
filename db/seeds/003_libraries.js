@@ -3,31 +3,31 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex('libraries').insert([
         {
-          name: 'Express.js',
+          name: 'express.js',
           description: "Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.",
           tag_name: "backend",
           link: "https://expressjs.com/"
         },
         {
-          name: 'Node.js',
+          name: 'node.js',
           description: "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
           tag_name: "backend",
           link: "https://nodejs.org/en/"
         },
         {
-          name: 'Cors',
+          name: 'cors',
           description: "CORS is a node.js package for providing a Connect/Express middleware that can be used to enable CORS with various options.",
           tag_name: "backend",
           link: "https://expressjs.com/en/resources/middleware/cors.html"
         },
         {
-          name: 'Nodemon',
+          name: 'nodemon',
           description: "nodemon is a tool that helps develop node.js based applications by automatically restarting the node application when file changes in the directory are detected.",
           tag_name: "backend",
           link: "https://www.npmjs.com/package/nodemon"
         },
         {
-          name: 'Helmet',
+          name: 'helmet',
           description: "Helmet helps you secure your Express apps by setting various HTTP headers. It's not a silver bullet, but it can help!",
           tag_name: "backend",
           link: "https://www.npmjs.com/package/helmet"
@@ -171,7 +171,7 @@ exports.seed = function(knex) {
           link: "https://www.npmjs.com/package/react-hook-form"
         },
         {
-          name: 'React Testing Library',
+          name: 'react testing library',
           description: "Simple and complete React DOM testing utilities that encourage good testing practices.",
           tag_name: "frontend",
           link: "https://www.npmjs.com/package/@testing-library/react"

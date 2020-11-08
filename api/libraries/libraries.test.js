@@ -10,6 +10,6 @@ beforeEach(prepTestDB)
 it("200 return all libraries", async function(){
     const res = await request(server).get("/libraries/")
 
-    expect(res.body.libraries).toEqual(expect.any(Array))
+    expect(res.body.libraries).toEqual(expect.any(Object))
     expect(res.status).toBe(200)
 })

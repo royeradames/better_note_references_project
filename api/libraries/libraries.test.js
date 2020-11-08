@@ -10,13 +10,20 @@ beforeEach(prepTestDB)
 it("/ 200 return all libraries", async function(){
     const res = await request(server).get("/libraries/")
 
-    expect(res.body.libraries).toEqual(expect.any(Object))
     expect(res.status).toBe(200)
+    expect(res.body.libraries).toEqual(expect.any(Object))
 })
 
 it("/:id 200 valid id found in server", async () => {
-    const res = await request(server).get("/libraries/1")
+    const res = await request(server).post("/libraries/1")
 
-    expect(res.body.library).toEqual(expect.any(Object))
     expect(res.status).toBe(200)
+    expect(res.body.library).toEqual(expect.any(Object))
+})
+
+it("/:id 404 invalid id", async () => {
+    const res = await request(server).post("/libraries/a")
+
+    expect(res.status).toBe(404)
+    expect(res.body.error).toEqual(expect.any(String))
 })

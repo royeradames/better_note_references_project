@@ -15,6 +15,7 @@ server.use(express.json())
 // third-party middleware (install from NPM)
 server.use(helmet())
 server.use(morgan("dev"))
+server.use("/libraries", libraries_router)
 
 //custom middleware (write it from scatch)
 server.use("/", (req, res) => {
@@ -22,9 +23,8 @@ server.use("/", (req, res) => {
 })
 //error middleware (catch errors in other middleware)
 server.use((err, req, res, next) => {
-    res.status(500).json(err)
+    res.status(500).json({err})
 })
 
-server.use("/libraries", libraries_router)
 
 module.exports = server

@@ -1,3 +1,8 @@
-import server from "./server"
+const server = require("./api/server")
 
-const port = process.env.PORT
+// Allow dynamic port 
+const PORT = process.env.PORT || 5000
+
+server.listen(PORT, () => {
+    console.log(`\n=== Server listening on port ${PORT} ===\n`)
+})

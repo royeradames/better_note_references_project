@@ -7,6 +7,7 @@ module.exports = {
     connection: {
       filename: './db/better_note_references.db3'
     },
+    useNullAsDefault: true,
     migrations: {
       directory: "./db/migration",
       tableName: "knex_migrations"
@@ -25,6 +26,7 @@ module.exports = {
     connection: {
       filename: ':memory:'
     },
+    useNullAsDefault: true,
     migrations: {
       directory: "./db/migrations",
       tableName: "knex_migrations"

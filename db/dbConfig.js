@@ -1,8 +1,8 @@
 /* import libraries*/
-import knex from "knex"
-import knexConfig from "../knexfile"
+const knex = require("knex")
+const knexConfig = require("../config/knexfile")
 
 const enviroment = process.env.DB_ENV || "development"
 
-export default knex(knexConfig[enviroment])
+module.exports = knex(knexConfig[enviroment])
 

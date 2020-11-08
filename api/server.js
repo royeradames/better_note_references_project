@@ -4,7 +4,7 @@ const morgan = require("morgan")
 const helmet = require("helmet")
 
 /*routers */
-
+const libraries_router = require("./libraries/libraries_router") 
 /* start server */
 const server = express()
 
@@ -24,5 +24,7 @@ server.use("/", (req, res) => {
 server.use((err, req, res, next) => {
     res.status(500).json(err)
 })
+
+server.use("/libraries", libraries_router)
 
 module.exports = server

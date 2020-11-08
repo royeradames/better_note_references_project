@@ -23,7 +23,7 @@
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",
-    "test": "cross-env DB_ENV=testing jest --watch --verbose --runInBand"
+    "test": "cross-env DB_ENV=testing jest api/libraries/libraries.test.js --watch --verbose --runInBand"
   },
   "repository": {
     "type": "git",
@@ -44,7 +44,6 @@
   },
   "homepage": "https://github.com/royeradames/better_note_references_project#readme",
   "jest": {
-    "testEnvironment": "node",
-    "clearMock": true
+    "testEnvironment": "node"
   }
 }

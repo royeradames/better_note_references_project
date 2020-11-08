@@ -24,7 +24,7 @@
   "scripts": {
     "server": "nodemon index.js",
     "start": "node index.js",
-    "test": "cross-env DB_ENV=testing jest api/libraries/libraries.test.js --watch --verbose --runInBand"
+    "test": "cross-env DB_ENV=testing jest --watch -f --runInBand api/libraries/libraries.test.js"
   },
   "repository": {
     "type": "git",

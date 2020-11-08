@@ -1,6 +1,6 @@
 /* import libraries*/
 const knex = require("knex")
-const knexConfig = require("../config/knexfile")
+const knexConfig = require("../knexfile")
 
 const enviroment = process.env.DB_ENV || "development"
 

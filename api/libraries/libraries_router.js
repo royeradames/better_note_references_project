@@ -12,7 +12,12 @@ router.get("/", async (req, res, next) => {
 
         const libraries = await Libraries.get_all_libraries()
         
-        res.status(200).json({libraries})
+        const is_libraries_found = libraries.length
+        if(is_libraries_found){
+            res.status(200).json({libraries})
+        }else{
+            res.status(404).json({error: "No libraries at this moment"})
+        }
     } catch (error) {
         next(error)
     }

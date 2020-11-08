@@ -14,7 +14,7 @@ server.use(express.json())
 
 // third-party middleware (install from NPM)
 server.use(helmet())
-server.use(morgan())
+server.use(morgan("dev"))
 
 //custom middleware (write it from scatch)
 server.use("/", (req, res) => {

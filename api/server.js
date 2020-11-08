@@ -18,7 +18,7 @@ server.use(morgan("dev"))
 server.use("/libraries", libraries_router)
 
 //custom middleware (write it from scatch)
-server.use("/", (req, res) => {
+server.get("/", (req, res) => {
     res.status(200).send(`<h1>Server is up and running</h1>`)
 })
 //error middleware (catch errors in other middleware)

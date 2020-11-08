@@ -1,7 +1,8 @@
 /* libraries */
-import express from "express"
-import morgan from "morgan"
-import helmet from "helmet"
+const express = require("express")
+const morgan = require("morgan")
+const helmet = require("helmet")
+
 /*routers */
 
 /* start server */
@@ -13,6 +14,8 @@ server.use(express.json())
 
 // third-party middleware (install from NPM)
 server.use(helmet())
+server.use(morgan())
+
 //custom middleware (write it from scatch)
 server.use("/", (req, res) => {
     res.status(200).send(`<h1>Server is up and running</h1>`)
@@ -22,4 +25,4 @@ server.use((err, req, res, next) => {
     res.status(500).json(err)
 })
 
-export default server
+module.exports = server

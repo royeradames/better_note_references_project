@@ -9,7 +9,6 @@ const { check, validationResult } = require('express-validator')
 
 router.get("/", async (req, res, next) => {
     try {
-        console.log(`inside get /`)
 
         const libraries = await Libraries.get_all_libraries()
         
@@ -19,7 +18,6 @@ router.get("/", async (req, res, next) => {
     }
 })
 router.post("/:id", check_id, async (req, res, next) => {
-    console.log(`inside post /:id`)
     res.status(200).json({library: req.library})
 })
 // router.post("/:name", async () => {
@@ -32,11 +30,14 @@ async function check_id(req, res, next){
 
         const id = req.params.id
         const library = await Libraries.find_by_id(id)
-        //if id matches none in database responde with invalid id
-        if (library.length === 0) res.status(404).json({error: "Invalid ID"})
-
-        req.library = library
-        next()
+        
+        const library_found = library.length
+        if (library_found) {
+            req.library = library
+            next()
+        } else {
+            res.status(404).json({error: "Invalid ID"})
+        }
     } catch (error) {
         next(error)
     }

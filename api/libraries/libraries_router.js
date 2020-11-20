@@ -9,9 +9,11 @@ const { param, body, validationResult } = require('express-validator')
 
 router.get("/", async (req, res, next) => {
     try {
-
+        //get all libraries on the database
         const libraries = await Libraries.get_all_libraries()
         
+        //if there is liraries data, give them to the client
+        // else tell the client that their is no data
         const is_libraries_found = libraries.length
         if(is_libraries_found){
             res.status(200).json({libraries})
@@ -33,6 +35,8 @@ router.get("/:id", validate_get_id, check_db, async (req, res, next) => {
     const errors = validationResult(req)
     const is_errors = !errors.isEmpty()
     if (is_errors)res.status(404).json(errors.array())
+
+    //return library
     res.status(200).json({library: req.library})
 })
 

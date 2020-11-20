@@ -5,7 +5,7 @@ const router = require("express").Router()
 const Libraries = require("./libraries_model")
 
 //import dependencies
-const { check, validationResult } = require('express-validator')
+const { param, body, validationResult } = require('express-validator')
 
 router.get("/", async (req, res, next) => {
     try {
@@ -22,10 +22,31 @@ router.get("/", async (req, res, next) => {
         next(error)
     }
 })
-router.get("/:id", check_db, async (req, res, next) => {
+
+const validate_get_id = [
+    param('id')
+        .isInt().withMessage('Id must be an integer')
+        ,
+]
+router.get("/:id", validate_get_id, check_db, async (req, res, next) => {
+    // handle fail validations
+    const errors = validationResult(req)
+    const is_errors = !errors.isEmpty()
+    if (is_errors)res.status(404).json(errors.array())
     res.status(200).json({library: req.library})
 })
-router.get("/findlibrarybyname/:name", check_db, async (req, res) => {
+
+const validate_get_name = [
+    param('name')
+        .matches(/[a-zA-Z]|(.js)+$|-|[1-9]+$/gmi).withMessage('Name must have letters, and it can have .js extension, "-", or numbers in the end')
+]
+router.get("/findlibrarybyname/:name", validate_get_name, check_db, async (req, res) => {
+    //handle fail validation
+    const errors = validationResult(req)
+    const is_errors = !errors.isEmpty()
+    if(is_errors) res.status(404).json(errors.array())
+
+    //return library data
     res.status(200).json({library: req.library_name})
 })
 

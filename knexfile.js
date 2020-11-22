@@ -9,7 +9,7 @@ module.exports = {
     },
     useNullAsDefault: true,
     migrations: {
-      directory: "./db/migration",
+      directory: "./db/migrations",
       tableName: "knex_migrations"
     },
     seeds: {

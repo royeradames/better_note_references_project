@@ -25,36 +25,35 @@ router.get("/", async (req, res, next) => {
     }
 })
 
-const validate_get_id = [
+router.get("/:id", [
     param('id')
         .isInt().withMessage('Id must be an integer')
         ,
-]
-router.get("/:id", validate_get_id, check_db, async (req, res, next) => {
-    // handle fail validations
-    const errors = validationResult(req)
-    const is_errors = !errors.isEmpty()
-    if (is_errors)res.status(404).json(errors.array())
+    ], handle_fail_valitions, check_db, async (req, res, next) => {
 
     //return library
     res.status(200).json({library: req.library})
 })
 
-const validate_get_name = [
+router.get("/findlibrarybyname/:name", [
     param('name')
-        .matches(/[a-zA-Z]|(.js)+$|-|[1-9]+$/gmi).withMessage('Name must have letters, and it can have .js extension, "-", or numbers in the end')
-]
-router.get("/findlibrarybyname/:name", validate_get_name, check_db, async (req, res) => {
-    //handle fail validation
-    const errors = validationResult(req)
-    const is_errors = !errors.isEmpty()
-    if(is_errors) res.status(404).json(errors.array())
-
+        .isAlpha().withMessage('Name must be letters.')
+        ,   
+], handle_fail_valitions, check_db, (req, res) => {
     //return library data
     res.status(200).json({library: req.library_name})
 })
 
 //local middleware
+function handle_fail_valitions(req, res, next){
+    // handle fail validations
+    const errors = validationResult(req)
+    const is_errors = !errors.isEmpty()
+    if (is_errors) return res.status(404).json(errors.array())
+
+    //no fail validation, then go to the next middleware
+    next()
+}
 async function check_db(req, res, next){
     try {
         //check id
@@ -81,7 +80,7 @@ async function check_db(req, res, next){
                 req.library_name = library_name
                 next()
             } else {
-                res.status(404).json({error: "name not found"})            
+                return res.status(404).json({error: "name not found"})            
             }
         }
         

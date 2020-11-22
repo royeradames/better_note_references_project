@@ -44,6 +44,27 @@ router.get("/findlibrarybyname/:name", [
     res.status(200).json({library: req.library_name})
 })
 
+router.post('/', [
+    body('name')
+        .notEmpty()
+        .isAlpha()
+        .withMessage('Name must be letters')
+    ,
+    body('description')
+        .optional()
+        .isAlphanumeric() // may not allow quotes, and period.
+    ,
+    body('tag_name')
+        .notEmpty()
+        .isAlpha()
+    ,
+    body('link')
+        .optional()
+        .isURL()
+    ,
+], async (req, res) => {
+
+})
 //local middleware
 function handle_fail_valitions(req, res, next){
     // handle fail validations

@@ -30,15 +30,3 @@ it("/:id 404 invalid id", async () => {
     expect(res.body.error).toEqual(expect.any(String))
 })
 
-// get library by name
-it("/findlibrarybyname/:name 200 given name IS ON database", async () => {
-    const res = await request(server).get("/libraries/findlibrarybyname/express.js")
-    expect(res.status).toBe(200)
-    expect(res.body.library).toEqual(expect.any(Array))
-})
-it("/findlibrarybyname/:name 404  given name NOT on database", async () => {
-    const res = await request(server).get("/libraries/findlibrarybyname/notalibraryonthedatabase")
-
-    expect(res.status).toBe(404)
-    expect(res.body.error).toEqual(expect.any(String))
-})

@@ -3,13 +3,13 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex('libraries').insert([
         {
-          name: 'express.js',
+          name: 'express',
           description: "Express is a minimal and flexible Node.js web application framework that provides a robust set of features for web and mobile applications.",
           tag_name: "backend",
           link: "https://expressjs.com/"
         },
         {
-          name: 'node.js',
+          name: 'node',
           description: "Node.js® is a JavaScript runtime built on Chrome's V8 JavaScript engine.",
           tag_name: "backend",
           link: "https://nodejs.org/en/"
@@ -33,7 +33,7 @@ exports.seed = function(knex) {
           link: "https://www.npmjs.com/package/helmet"
         },
         {
-          name: 'cross-env 🔀',
+          name: 'cross env',
           description: "cross-env makes it so you can have a single command without worrying about setting or using the environment variable properly for the platform. Just set it like you would if it's running on a POSIX system, and cross-env will take care of setting it properly.",
           tag_name: "backend",
           link: "https://www.npmjs.com/package/cross-env"
@@ -51,7 +51,7 @@ exports.seed = function(knex) {
           link: "http://knexjs.org/"
         },
         {
-          name: 'sqlite3',
+          name: 'sqlite',
           description: "Run sqlite",
           tag_name: "backend",
           link: "https://www.npmjs.com/package/sqlite3"
@@ -69,7 +69,7 @@ exports.seed = function(knex) {
           link: "https://www.npmjs.com/package/supertest"
         },
         {
-          name: 'knex-cleaner',
+          name: 'knex cleaner',
           description: "Helper library to clean a PostgreSQL, MySQL or SQLite3 database tables using Knex. Great for integration tests.",
           tag_name: "backend",
           link: "https://www.npmjs.com/package/knex-cleaner"
@@ -105,7 +105,7 @@ exports.seed = function(knex) {
           link: "https://styled-components.com/"
         },
         {
-          name: 'react-router',
+          name: 'react router',
           description: "Link pages in React.",
           tag_name: "frontend",
           link: "https://reactrouter.com/web/example/basic"
@@ -129,7 +129,7 @@ exports.seed = function(knex) {
           link: "https://www.npmjs.com/package/fkill-cli"
         },
         {
-          name: 'jest-dom',
+          name: 'jestdom',
           description: "Extends jest to make testing the DOM easier.",
           tag_name: "frontend",
           link: "https://www.npmjs.com/package/@testing-library/jest-dom"
@@ -141,31 +141,31 @@ exports.seed = function(knex) {
           link: "https://www.npmjs.com/package/redux"
         },
         {
-          name: 'react-redux',
+          name: 'react redux',
           description: "Make react understand redux.",
           tag_name: "frontend",
           link: "https://www.npmjs.com/package/react-redux"
         },
         {
-          name: 'redux-thunk',
+          name: 'redux thunk',
           description: "Wrap an expression and delay its evaluation. The thunk can be used to delay the dispatch of an action, or to dispatch only if a centain condition is met. Thunk is the past-tense of think. Useful for redux connectand not necessary for redux hooks.",
           tag_name: "frontend",
           link: "https://www.npmjs.com/package/redux-thunk"
         },
         {
-          name: 'redux-logger',
+          name: 'redux logger',
           description: "lets you replay problems as if they happened in your own browser by automatically  console logging it in your console.",
           tag_name: "frontend",
           link: "https://www.npmjs.com/package/redux-logger"
         },
         {
-          name: 'axios-retry',
+          name: 'axios retry',
           description: "Axios plugin that intercepts failed requests and retries them whenever possible.",
           tag_name: "frontend",
           link: "npmjs.com/package/axios-retry"
         },
         {
-          name: 'react-hook-form',
+          name: 'react hook form',
           description: "Performant, flexible and extensible forms with easy-to-use validation.",
           tag_name: "frontend",
           link: "https://www.npmjs.com/package/react-hook-form"

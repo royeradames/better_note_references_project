@@ -18,7 +18,7 @@ describe("200", () => {
 
         //validate server response
         expect(res.status).toBe(200)
-        expect(res.body[0].name).toMatch(/express/i)
+        expect(res.body.name).toMatch(/express/i)
     })
 })
 describe("404", () => {

@@ -52,7 +52,7 @@ router.post('/', [
     ,
     body('description')
         .optional()
-        .matches(/-|\.|"|'|\w+/gmi)
+        .matches(/^[a-zA-Z_.,0-9"'-]+( [a-zA-Z_.,0-9"'-]+)*$/i)
         .withMessage("Can only have letters, numbers, periods, dashes, single and double quotes.")
     ,
     body('tag_name')
@@ -64,14 +64,24 @@ router.post('/', [
         .isURL()
     ,
 ], handle_fail_valitions, check_db, async (req, res) => {
-    //don't allow duplicates,
-    // if you can find the library name on the db then don't allow that new library
+    // collect all validated inputs
+    let new_library_data = {}
+    //inputs
+    const is_name = req.body.name
+    const is_description = req.body.description
+    const is_tag_name = req.body.tag_name
+    const is_link = req.body.link
+    //if the value was given then add it to the new_library_data package
+    if (is_name) new_library_data.name = req.body.name
+    if (is_description) new_library_data.description = req.body.description
+    if (is_tag_name) new_library_data.tag_name = req.body.tag_name
+    if (is_link) new_library_data.link = req.body.link
 
     //add valid inputs to the database
-
+    const new_library = (await Libraries.new_library(new_library_data))[0]
     //return a response saying that it was successful
     // says "created"
-    res.status(200).json('success')
+    res.status(200).json({new_library})
 })
 //local middleware
 function handle_fail_valitions(req, res, next){
@@ -86,10 +96,12 @@ function handle_fail_valitions(req, res, next){
 async function check_db(req, res, next){
     try {
         //body name must not be found
+        //don't allow duplicates,
         const new_library_name = req.body.name
         const library_name = await Libraries.find_by_name(new_library_name)
         const library_name_found = library_name.length
         if(library_name_found){
+            // if you can find the library name on the db then don't allow that new library 
             return res.status(406).json('library already exists')
         }
         else{

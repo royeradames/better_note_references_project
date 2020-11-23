@@ -41,7 +41,7 @@ router.get("/findlibrarybyname/:name", [
         ,   
 ], handle_fail_valitions, check_db, (req, res) => {
     //return library data
-    res.status(200).json(req.library)
+    res.status(200).json(req.library_by_name)
 })
 
 router.post('/', [
@@ -126,11 +126,11 @@ async function check_db(req, res, next){
         //params check name
         const name = req.params.name 
         if(name){
-            const library_name = await Libraries.find_by_name(name)
-            const library_name_found = library_name.length
+            const library_by_name = (await Libraries.find_by_name(name))[0]
+            const library_name_found = library_by_name
             
             if (library_name_found) {
-                req.library_name = library_name
+                req.library_by_name = library_by_name
                 next()
             } else {
                 return res.status(404).json({error: "name not found"})            

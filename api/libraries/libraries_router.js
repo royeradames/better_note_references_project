@@ -32,7 +32,7 @@ router.get("/:id", [
     ], handle_fail_valitions, check_db, async (req, res, next) => {
 
     //return library
-    res.status(200).json({library: req.library})
+    res.status(200).json(req.library)
 })
 
 router.get("/findlibrarybyname/:name", [
@@ -41,7 +41,7 @@ router.get("/findlibrarybyname/:name", [
         ,   
 ], handle_fail_valitions, check_db, (req, res) => {
     //return library data
-    res.status(200).json({library: req.library_name})
+    res.status(200).json(req.library)
 })
 
 router.post('/', [
@@ -63,7 +63,7 @@ router.post('/', [
         .optional()
         .isURL()
     ,
-], handle_fail_valitions, check_db, async (req, res) => {
+], handle_fail_valitions, no_duplicates, async (req, res) => {
     // collect all validated inputs
     let new_library_data = {}
     //inputs
@@ -93,8 +93,7 @@ function handle_fail_valitions(req, res, next){
     //no fail validation, then go to the next middleware
     next()
 }
-async function check_db(req, res, next){
-    try {
+async function no_duplicates(req, res, next){
         //body name must not be found
         //don't allow duplicates,
         const new_library_name = req.body.name
@@ -106,14 +105,16 @@ async function check_db(req, res, next){
         }
         else{
             next()
-        }
-
+        }   
+}
+async function check_db(req, res, next){
+    try {
         //params check id
         const id = req.params.id
         const is_id_input = id
         if(is_id_input){
-            const library = await Libraries.find_by_id(id)
-            const library_found = library.length
+            const library = (await Libraries.find_by_id(id))[0]
+            const library_found = library
             if (library_found) {
                 req.library = library
                 next()

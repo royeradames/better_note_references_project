@@ -17,7 +17,7 @@ const url = "/libraries/"
 // get all libaries 
 it("/ 200 return all libraries", async () =>{
     //call server 
-    const res = await request(server).get("/libraries/")
+    const res = await request(server).get(url)
 
     //validate server response
     expect(res.status).toBe(200)

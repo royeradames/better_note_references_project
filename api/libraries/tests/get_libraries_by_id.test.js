@@ -20,7 +20,8 @@ it("valid id found in server", async () => {
 
     //validate server response
     expect(res.status).toBe(200)
-    expect(res.body.library).toEqual(expect.any(Object))
+    expect(res.body.id).toBe(1)
+    expect(res.body.name).toMatch(/express/i)
 })
 
 it("invalid id", async () => {
@@ -28,7 +29,6 @@ it("invalid id", async () => {
     const res = await request(server).get(`${url}/a`)
 
     //validate server response
-    console.log(res.body)
     expect(res.body[0].value).toMatch(/a/i)
     expect(res.body[0].param).toMatch(/id/i)
 })

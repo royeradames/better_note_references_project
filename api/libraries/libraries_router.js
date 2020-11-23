@@ -16,7 +16,7 @@ router.get("/", async (req, res, next) => {
         // else tell the client that their is no data
         const is_libraries_found = libraries.length
         if(is_libraries_found){
-            res.status(200).json({libraries})
+            res.status(200).json(libraries)
         }else{
             res.status(404).json({error: "No libraries at this moment"})
         }
@@ -47,12 +47,13 @@ router.get("/findlibrarybyname/:name", [
 router.post('/', [
     body('name')
         .notEmpty()
-        .isAlpha()
-        .withMessage('Name must be letters')
+        .matches(/^[a-z]+( [a-z]+)*$/)
+        .withMessage('Name can only be one or more alphabetic words in all lowercase')
     ,
     body('description')
         .optional()
-        .isAlphanumeric() // may not allow quotes, and period.
+        .matches(/-|\.|"|'|\w+/gmi)
+        .withMessage("Can only have letters, numbers, periods, dashes, single and double quotes.")
     ,
     body('tag_name')
         .notEmpty()
@@ -62,8 +63,15 @@ router.post('/', [
         .optional()
         .isURL()
     ,
-], async (req, res) => {
+], handle_fail_valitions, check_db, async (req, res) => {
+    //don't allow duplicates,
+    // if you can find the library name on the db then don't allow that new library
 
+    //add valid inputs to the database
+
+    //return a response saying that it was successful
+    // says "created"
+    res.status(200).json('success')
 })
 //local middleware
 function handle_fail_valitions(req, res, next){
@@ -77,7 +85,18 @@ function handle_fail_valitions(req, res, next){
 }
 async function check_db(req, res, next){
     try {
-        //check id
+        //body name must not be found
+        const new_library_name = req.body.name
+        const library_name = await Libraries.find_by_name(new_library_name)
+        const library_name_found = library_name.length
+        if(library_name_found){
+            return res.status(406).json('library already exists')
+        }
+        else{
+            next()
+        }
+
+        //params check id
         const id = req.params.id
         const is_id_input = id
         if(is_id_input){
@@ -91,8 +110,8 @@ async function check_db(req, res, next){
             }
         }
 
-        //check name
-        const name = req.params.name
+        //params check name
+        const name = req.params.name 
         if(name){
             const library_name = await Libraries.find_by_name(name)
             const library_name_found = library_name.length

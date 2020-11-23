@@ -12,13 +12,13 @@ beforeEach(prepTestDB)
 const url = "/libraries/findlibrarybyname"
 
 describe("200", () => {
-    it("/findlibrarybyname/:name 200 given name IS ON database", async () => {
+    it("given name IS ON database", async () => {
         //call server 
         const res = await request(server).get(`${url}/express`)
 
         //validate server response
         expect(res.status).toBe(200)
-        expect(res.body.library).toEqual(expect.any(Array))
+        expect(res.body[0].name).toMatch(/express/i)
     })
 })
 describe("404", () => {

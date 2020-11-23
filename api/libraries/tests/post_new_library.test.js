@@ -20,8 +20,8 @@ describe("success", () => {
         })
 
         //check reserver responds
-        console.log(res.body)
         expect(res.status).toBe(200)
+        expect(res.body.new_library.name).toMatch(/testing correctly/i)
     })
 
 })

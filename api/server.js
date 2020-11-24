@@ -5,6 +5,7 @@ const helmet = require("helmet")
 
 /*routers */
 const libraries_router = require("./libraries/libraries_router") 
+const tags_router = require("./tags/tags_router")
 /* start server */
 const server = express()
 
@@ -16,6 +17,7 @@ server.use(express.json())
 server.use(helmet())
 server.use(morgan("dev"))
 server.use("/libraries", libraries_router)
+server.use("/tags", tags_router)
 
 //custom middleware (write it from scatch)
 server.get("/", (req, res) => {

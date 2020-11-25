@@ -1,5 +1,5 @@
 //import
-const server =require("../../server")
+const server = require("../../server")
 const request = require("supertest")
 
 //database
@@ -20,11 +20,20 @@ it("check all useful links are return", async () => {
 
     //validate server resp
     expect(res.status).toBe(200)    
-    console.log(res.body)
     // expect(res.body).toMatch(//i)
     expect(res.body[0].id).toBe(1)
     expect(res.body[0].name).toMatch(/node.js documentation/i)
     expect(res.body[0].description).toMatch(/the official api reference/i)
     expect(res.body[0].tag_name).toMatch(/backend/i)
 })
-it("validation works")
+it("let user know if there is no useful_links", async () => {
+    //delete all links
+    await db("useful_links").delete()
+
+    // call server
+    const res = await request(server).get(url)
+
+    //validate server resp
+    expect(res.status).toBe(404)
+    expect(res.body).toMatch(/no links/i)
+})

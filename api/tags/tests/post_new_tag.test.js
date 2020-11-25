@@ -12,6 +12,14 @@ const prepTestDB = require("../../../helpers/prepTestDB")
 beforeEach(prepTestDB)
 
 //local global endpoint url
-const url = "/tags/"
+const url = "/tags/newtag"
 
 // post new tag
+it("accept valid inputs, and creates a unique tag", async () => {
+    //call server
+    const res = await request(server).post(url).send({name: "testingName"})
+
+    //validate server
+    expect(res.status).toBe(200)    
+    expect(res.body.new_tag).toMatch(/testingname/i)
+})

@@ -8,7 +8,7 @@ const Useful_links = require("./useful_links_model")
 router.get("/", async (req, res, next) => {
     try {
         // get all links on db
-       const all_useful_links = await Useful_links.get_all_useful_links()
+       const all_useful_links = await Useful_links.get_all()
 
        const is_have_links = all_useful_links.length
        if(is_have_links){
@@ -23,4 +23,15 @@ router.get("/", async (req, res, next) => {
     }
 })
 
+// get link by id
+router.get("/:id", async (req, res, next) => {
+    try {
+        //get link from db
+       const useful_link = (await Useful_links.by_id(req.params.id))[0]
+       res.status(200).json(useful_link)
+    } catch (error) {
+        next(error)
+        
+    }
+})
 module.exports = router

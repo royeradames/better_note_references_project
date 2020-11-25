@@ -11,7 +11,7 @@ const prepTestDB = require("../../../helpers/prepTestDB")
 // apply a static db for each tests
 beforeEach(prepTestDB)
 
-// apply db reset for each test
+// endpoint url
 const url = "/useful_links/"
 
 it("get library by id", async () => {

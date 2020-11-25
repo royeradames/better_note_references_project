@@ -23,3 +23,12 @@ it("accept valid inputs, and creates a unique tag", async () => {
     expect(res.status).toBe(200)    
     expect(res.body.new_tag).toMatch(/testingname/i)
 })
+it("fails if you don't make tag name only letters", async () => {
+    //call server
+    const res = await request(server).post(url).send({name: "not@valid123Name"})
+
+    //validate server
+    expect(res.status).toBe(404)
+    expect(res.body.value).toMatch(/not@valid123Name/i)
+    expect(res.body.msg).toMatch(/must be letters/i)
+})

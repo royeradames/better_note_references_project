@@ -30,7 +30,7 @@ router.get("/", async (req, res, next) => {
 // create new tag
 router.post("/newtag", [
     body("name")
-        .isAlpha().withMessage("Only letters for tag name")
+        .isAlpha().withMessage("Tag name must be letters")
         ,
 ], handle_fail_valitions, async (req, res, next) => {
     try {
@@ -50,7 +50,7 @@ function handle_fail_valitions(req, res, next){
     // handle fail validations
     const errors = validationResult(req)
     const is_errors = !errors.isEmpty()
-    if (is_errors) return res.status(404).json(errors.array())
+    if (is_errors) return res.status(404).json(errors.array()[0])
 
     //no fail validation, then go to the next middleware
     next()

@@ -24,3 +24,14 @@ it("return all tags", async () =>{
     expect(res.status).toBe(200)    
     expect(res.body[0].name).toMatch("frontend")
 })
+it("no tags available, returns a message saying so", async () => {
+    //delete all tags
+    await db("tags").delete()
+
+    //call server
+    const res = await request(server).get(url)
+
+    //validate server resp
+    expect(res.status).toBe(404)
+    expect(res.body).toMatch(/no tags/i)
+})

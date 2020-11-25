@@ -24,5 +24,14 @@ it("get library by id", async () => {
     expect(res.body.name).toMatch(/node.js docum/i)
     expect(res.body.description).toMatch(/the official api reference documentation/i)
 })
-it.todo("if id not found then resp with id not found")
-it.todo("id must be an id")
+it("if id not found then resp with id not found", async () => {
+    // delete all links
+    await db("useful_links").delete()
+
+    // get sever data
+    const res = await request(server).get(`${url}/1`)
+
+    //validate server resp
+    expect(res.status).toBe(404)
+    expect(res.body).toMatch(/link not found/i)
+})

@@ -35,3 +35,12 @@ it("if id not found then resp with id not found", async () => {
     expect(res.status).toBe(404)
     expect(res.body).toMatch(/link not found/i)
 })
+it("id must be an integer", async () => {
+    //request data from server
+    const res = await request(server).get(`${url}/not_a_valid_id`)
+
+    //verify server request
+    expect(res.status).toBe(404)
+    expect(res.body.msg).toMatch(/id must be an integer/i)
+    expect(res.body.value).toMatch(/not_a_valid_id/i)
+})

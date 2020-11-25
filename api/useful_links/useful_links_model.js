@@ -3,9 +3,13 @@ const db = require("../../db/dbConfig")
 
 //export functions
 module.exports = {
-    get_all_useful_links
+    get_all,
+    by_id
 }
 
-async function get_all_useful_links(){
+function by_id(id){
+    return db("useful_links").where({id})
+}
+function get_all(){
     return db("useful_links")
 }

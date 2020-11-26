@@ -12,8 +12,28 @@ const prepTestDB = require("../../../helpers/prepTestDB")
 beforeEach(prepTestDB)
 
 //endpoint url
-const url = "/useful_link/name/"
+const url = "/useful_links/name"
 
-it.todo("valid resp")
+it("valid resp", async () => {
+    // get resp from server
+    const res = await request(server).post(url).send({name: "React Component"})
+
+    // validate server
+    expect(res.status).toBe(200)
+    expect(res.body.id).toBe(33)
+    expect(res.body.name).toMatch(/react component/i)
+    expect(res.body.description).toMatch(/react lets you define components/i)
+})
+// it("no links", async () => {
+//     // delete all links in db
+//     await db("useful_links").delete()
+
+//     //get data from server
+//     const res = await request(server).post(url).send({name: "React Component"})
+
+//     //check server data
+//     expect(res.status).toBe(404) 
+//     console.log(res.body)
+//     // expect(res.body).toMatch(//i)
+// })
 it.todo("invalid id")
-it.todo("no links")

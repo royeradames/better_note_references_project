@@ -24,16 +24,16 @@ it("valid resp", async () => {
     expect(res.body.name).toMatch(/react component/i)
     expect(res.body.description).toMatch(/react lets you define components/i)
 })
-// it("no links", async () => {
-//     // delete all links in db
-//     await db("useful_links").delete()
+it("no links", async () => {
+    // delete all links in db
+    await db("useful_links").delete()
 
-//     //get data from server
-//     const res = await request(server).post(url).send({name: "React Component"})
+    //get data from server
+    const res = await request(server).post(url).send({name: "React Component"})
 
-//     //check server data
-//     expect(res.status).toBe(404) 
-//     console.log(res.body)
-//     // expect(res.body).toMatch(//i)
-// })
+    //check server data
+    expect(res.status).toBe(404) 
+    console.log(res.body)
+    // expect(res.body).toMatch(//i)
+})
 it.todo("invalid id")

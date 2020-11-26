@@ -53,8 +53,13 @@ router.post("/name", async (req, res, next) => {
         //get link by name from db
         const link = (await Useful_links.by_name(req.body.name))[0]        
 
-        //resp with link
-        res.status(200).json(link)
+        if(link) {
+            //resp with link
+            res.status(200).json(link)
+        }
+        else{
+            res.status(404).json("No link found")
+        }
     } catch (error) {
         next(error)
         

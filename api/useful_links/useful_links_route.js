@@ -47,6 +47,19 @@ router.get("/:id", [
     }
 })
 
+// get link by name
+router.post("/name", async (req, res, next) => {
+    try {
+        //get link by name from db
+        const link = (await Useful_links.by_name(req.body.name))[0]        
+
+        //resp with link
+        res.status(200).json(link)
+    } catch (error) {
+        next(error)
+        
+    }
+})
 //local middleware
 function handle_fail_valitions(req, res, next){
     // handle fail validations

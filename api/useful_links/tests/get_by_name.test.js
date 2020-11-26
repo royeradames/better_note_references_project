@@ -33,7 +33,14 @@ it("no links", async () => {
 
     //check server data
     expect(res.status).toBe(404) 
-    console.log(res.body)
-    // expect(res.body).toMatch(//i)
+    expect(res.body).toMatch(/no link found/i)
 })
-it.todo("invalid id")
+it("validation is working", async () => {
+    //get resp from server
+    const res = await request(server).post(url).send({name: "nota-useful_@Link"})
+
+    // validate server response
+    expect(res.status).toBe(404)
+    expect(res.body.msg).toMatch(/name can have/i)
+    expect(res.body.value).toMatch(/nota-useful_@Link/i)
+})

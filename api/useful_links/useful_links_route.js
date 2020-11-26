@@ -48,7 +48,10 @@ router.get("/:id", [
 })
 
 // get link by name
-router.post("/name", async (req, res, next) => {
+router.post("/name", [
+    body("name")
+        .matches(/^[a-zA-aZ_.,0-9?|\-<>()\/]+( [a-zA-Z\/_.,0-9?|\-<>()]+)*$/i).withMessage("Name can have have upper and lower case words, -, |, ., <, >, ?, (, ), / , (commads), _, and numbers ")
+], handle_fail_valitions , async (req, res, next) => {
     try {
         //get link by name from db
         const link = (await Useful_links.by_name(req.body.name))[0]        

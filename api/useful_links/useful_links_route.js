@@ -68,6 +68,23 @@ router.post("/name", [
         
     }
 })
+//create new useful link
+router.post("/new_link", async (req, res, next) => {
+    try {
+        const link_data = {
+        name: req.body.name,
+        url: req.body.url,
+        tag_name: req.body.tag_name,
+        } 
+    if(req.body.description) link_data.description = req.body.description 
+       const new_link = await Useful_links.new_resource(link_data) 
+
+       res.status(200).json({new_link})
+    } catch (error) {
+        next(error)
+        
+    }
+})
 //local middleware
 function handle_fail_valitions(req, res, next){
     // handle fail validations

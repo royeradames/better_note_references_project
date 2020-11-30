@@ -22,7 +22,7 @@ it("return all tags", async () =>{
 
     //validate server response
     expect(res.status).toBe(200)    
-    expect(res.body[0].name).toMatch("frontend")
+    expect(res.body[0]).toMatch("frontend")
 })
 it("no tags available, returns a message saying so", async () => {
     //delete all tags

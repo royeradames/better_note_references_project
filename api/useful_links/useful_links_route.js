@@ -71,15 +71,21 @@ router.post("/name", [
 //create new useful link
 router.post("/new_link", async (req, res, next) => {
     try {
+        //construct new link data 
+        //must have data
         const link_data = {
         name: req.body.name,
         url: req.body.url,
         tag_name: req.body.tag_name,
         } 
-    if(req.body.description) link_data.description = req.body.description 
-       const new_link = await Useful_links.new_resource(link_data) 
+        //add additional data if it's given
+        if(req.body.description) link_data.description = req.body.description 
+        
+        //create new link, and store its data on var
+        const new_link = await Useful_links.new_resource(link_data) 
 
-       res.status(200).json({new_link})
+        // resp with new like data
+        res.status(200).json({new_link})
     } catch (error) {
         next(error)
         

@@ -6,7 +6,8 @@ module.exports = {
 }
 
 async function get_all_tags(){
-    return db("tags").select()
+    return db("tags")
+        .pluck("name") 
 }
 async function post_new_tag(name){
     await db("tags").insert({name})

@@ -1,12 +1,13 @@
 /* libraries */
 const express = require("express")
-const morgan = require("morgan")
 const helmet = require("helmet")
+const cors = require("cors")
 
 /*routers */
 const libraries_router = require("./libraries/libraries_router") 
 const tags_router = require("./tags/tags_router")
 const useful_links = require("./useful_links/useful_links_route")
+
 /* start server */
 const server = express()
 
@@ -16,7 +17,7 @@ server.use(express.json())
 
 // third-party middleware (install from NPM)
 server.use(helmet())
-server.use(morgan("dev"))
+server.use(cors())
 server.use("/libraries", libraries_router)
 server.use("/tags", tags_router)
 server.use("/useful_links", useful_links)

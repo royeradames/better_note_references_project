@@ -3,7 +3,7 @@ const server = require("../../server")
 const request = require("supertest")
 
 //database
-const db = require('../../../db/dbConfig')
+const db = require("../../../db/dbConfig")
 
 // prep test database
 const prepTestDB = require("../../../helpers/prepTestDB")

@@ -9,6 +9,7 @@ const { param, body, validationResult } = require("express-validator")
 
 router.get("/", async (req, res, next) => {
     try {
+        // todo: limit how many libraries you get back, and in what order you are searching asc, desc. String literals
         //get all libraries on the database
         const libraries = await Libraries.get_all_libraries()
         
@@ -35,6 +36,7 @@ router.get("/:id", [
     res.status(200).json(req.library)
 })
 
+// todo: change resource name from find... to name/:name
 router.get("/findlibrarybyname/:name", [
     param("name")
         .isAlpha().withMessage("Name must be letters.")
@@ -132,9 +134,22 @@ router.put("/", [
     }
 })
 //delete library by id
-
+router.delete("/:id", [
+    param("id")
+        .isInt().withMessage("Id must be an integer")
+        ,
+    ], handle_fail_valitions, check_db, async (req, res, next) => {
+    
+    // delete library from db
+    const deleted_library = await Libraries.delete_by_id(req.params.id)
+    //return library
+    res.status(200).json({deleted_library: req.library})
+})
 
 //local middleware
+//  todo: move body data collection 
+//  todo: move backend valiation into helper dictory 
+
 function handle_fail_valitions(req, res, next){
     // handle fail validations
     const errors = validationResult(req)

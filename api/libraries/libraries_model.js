@@ -5,6 +5,15 @@ module.exports = {
     find_by_name,
     get_all_libraries,
     new_library,
+    update_by_id,
+}
+async function update_by_id(id, data){
+    await db("libraries")
+        .where({id})
+        .update(data)
+    return db("libraries")
+        .where({id})
+        .first()
 }
 async function new_library(library_data){
     await db("libraries")

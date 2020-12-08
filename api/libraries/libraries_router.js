@@ -83,6 +83,54 @@ router.post('/', [
     // says "created"
     res.status(200).json({new_library})
 })
+
+//update library by id
+router.put("/", [
+    body('name')
+        .notEmpty()
+        .matches(/^[a-z]+( [a-z]+)*$/)
+        .withMessage('Name can only be one or more alphabetic words in all lowercase')
+    ,
+    body('description')
+        .optional()
+        .matches(/^[a-zA-Z_.,0-9"'-]+( [a-zA-Z_.,0-9"'-]+)*$/i)
+        .withMessage("Can only have letters, numbers, periods, dashes, single and double quotes.")
+    ,
+    body('tag_name')
+        .notEmpty()
+        .isAlpha()
+    ,
+    body('link')
+        .optional()
+        .isURL()
+    ,
+], handle_fail_valitions, no_duplicates, async (req, res, next) => {
+    try {
+        
+        //collect all inputs
+        let update_library_data = {}
+        //inputs
+        const is_name = req.body.name
+        const is_description = req.body.description
+        const is_tag_name = req.body.tag_name
+        const is_link = req.body.link
+        //if the value was given then add it to the update_library_data package
+        if (is_name) update_library_data.name = req.body.name
+        if (is_description) update_library_data.description = req.body.description
+        if (is_tag_name) update_library_data.tag_name = req.body.tag_name
+        if (is_link) update_library_data.link = req.body.link
+        //update library on the db
+        const updated_library = await Libraries.update_by_id(req.body.id, update_library_data) 
+
+        //response with the updated library
+        res.status(200).json(updated_library)
+    } catch (error) {
+        next(error)
+    }
+})
+//delete library by id
+
+
 //local middleware
 function handle_fail_valitions(req, res, next){
     // handle fail validations

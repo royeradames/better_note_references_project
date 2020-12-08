@@ -3,7 +3,7 @@ const server = require("../../server")
 const request = require("supertest")
 
 //database
-const db = require("../../../dbConfig")
+// const db = require("../../../dbConfig")
 
 // prep test database
 const prepTestDB = require("../../../helpers/prepTestDB")
@@ -14,7 +14,14 @@ beforeEach(prepTestDB)
 // resource url
 const url = "/libraries/"
 
-it.todo("delete a library")
+it("delete a library", async () => {
+    // request resource
+    const res = await request(server).delete(`${url}1`)
+
+    // valid server response
+    expect(res.status).toBe(200)
+    expect(res.body.deleted_library.name).toMatch(/express/i)
+})
 it.todo("validation works")
 it.todo("404 if there is no matching library to delete")
 it.todo("404 if there is no avaliable library to delete")

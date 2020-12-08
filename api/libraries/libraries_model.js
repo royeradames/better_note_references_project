@@ -6,6 +6,14 @@ module.exports = {
     get_all_libraries,
     new_library,
     update_by_id,
+    delete_by_id,
+}
+async function delete_by_id(id){
+    const deleted_library = await find_by_id(id)
+    await db("libraries")
+        .where({id})
+        .delete()
+    return deleted_library
 }
 async function update_by_id(id, data){
     await db("libraries")

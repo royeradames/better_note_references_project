@@ -5,7 +5,7 @@ const router = require("express").Router()
 const Libraries = require("./libraries_model")
 
 //import dependencies
-const { param, body, validationResult } = require('express-validator')
+const { param, body, validationResult } = require("express-validator")
 
 router.get("/", async (req, res, next) => {
     try {
@@ -26,8 +26,8 @@ router.get("/", async (req, res, next) => {
 })
 
 router.get("/:id", [
-    param('id')
-        .isInt().withMessage('Id must be an integer')
+    param("id")
+        .isInt().withMessage("Id must be an integer")
         ,
     ], handle_fail_valitions, check_db, async (req, res, next) => {
 
@@ -36,30 +36,30 @@ router.get("/:id", [
 })
 
 router.get("/findlibrarybyname/:name", [
-    param('name')
-        .isAlpha().withMessage('Name must be letters.')
+    param("name")
+        .isAlpha().withMessage("Name must be letters.")
         ,   
 ], handle_fail_valitions, check_db, (req, res) => {
     //return library data
     res.status(200).json(req.library_by_name)
 })
 
-router.post('/', [
-    body('name')
+router.post("/", [
+    body("name")
         .notEmpty()
         .matches(/^[a-z]+( [a-z]+)*$/)
-        .withMessage('Name can only be one or more alphabetic words in all lowercase')
+        .withMessage("Name can only be one or more alphabetic words in all lowercase")
     ,
-    body('description')
+    body("description")
         .optional()
         .matches(/^[a-zA-Z_.,0-9"'-]+( [a-zA-Z_.,0-9"'-]+)*$/i)
         .withMessage("Can only have letters, numbers, periods, dashes, single and double quotes.")
     ,
-    body('tag_name')
+    body("tag_name")
         .notEmpty()
         .isAlpha()
     ,
-    body('link')
+    body("link")
         .optional()
         .isURL()
     ,
@@ -86,25 +86,28 @@ router.post('/', [
 
 //update library by id
 router.put("/", [
-    body('name')
+    body("id")
+        .isInt().withMessage("must be an integer")
+        ,
+    body("name")
         .notEmpty()
         .matches(/^[a-z]+( [a-z]+)*$/)
-        .withMessage('Name can only be one or more alphabetic words in all lowercase')
+        .withMessage("can only be one or more alphabetic words in all lowercase")
     ,
-    body('description')
+    body("description")
         .optional()
         .matches(/^[a-zA-Z_.,0-9"'-]+( [a-zA-Z_.,0-9"'-]+)*$/i)
         .withMessage("Can only have letters, numbers, periods, dashes, single and double quotes.")
     ,
-    body('tag_name')
+    body("tag_name")
         .notEmpty()
-        .isAlpha()
+        .isAlpha().withMessage("must be alphabetic characters")
     ,
-    body('link')
+    body("link")
         .optional()
-        .isURL()
+        .isURL().withMessage("must be a valid link")
     ,
-], handle_fail_valitions, no_duplicates, async (req, res, next) => {
+], handle_fail_valitions, check_db, async (req, res, next) => {
     try {
         
         //collect all inputs
@@ -149,7 +152,7 @@ async function no_duplicates(req, res, next){
         const library_name_found = library_name.length
         if(library_name_found){
             // if you can find the library name on the db then don't allow that new library 
-            return res.status(406).json('library already exists')
+            return res.status(406).json("library already exists")
         }
         else{
             next()
@@ -157,17 +160,28 @@ async function no_duplicates(req, res, next){
 }
 async function check_db(req, res, next){
     try {
-        //params check id
-        const id = req.params.id
+        //check id
+        const id = req.params.id || req.body.id
         const is_id_input = id
         if(is_id_input){
+            // check if there is one or more libraries to find
+            const libraries_found = (await Libraries.get_all_libraries()).length
+
+            // find the library
             const library = (await Libraries.find_by_id(id))[0]
             const library_found = library
             if (library_found) {
+                //library found
                 req.library = library
                 next()
-            } else {
+            } 
+            else if (libraries_found){
+                // if there is libraries to be found and it was not
                 res.status(404).json({error: "Invalid ID"})
+            }
+            else {
+                // no library to be found
+                res.status(404).json("no libraries to be found")
             }
         }
 

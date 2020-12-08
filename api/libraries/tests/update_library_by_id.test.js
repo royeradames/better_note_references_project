@@ -2,6 +2,9 @@
 const server = require("../../server")
 const request = require("supertest")
 
+//database
+const db = require('../../../db/dbConfig')
+
 // prep test database
 const prepTestDB = require("../../../helpers/prepTestDB")
 
@@ -52,4 +55,20 @@ it("invalid inputs actives validation error resp", async () => {
     expect(res.body[4].msg).toMatch(/must be a valid link/i)
 
 })
-it.todo("no library to update")
+it("no library to update", async () => {
+    // delete library table
+    await db("libraries").delete()
+
+    //request resource
+    const res = await request(server).put(url).send({
+        id: 1,
+        name: "testing correctly",
+        description: "This is a test, and everything should work just fine.",
+        tag_name: "backend",
+        link: "https://test.com/", 
+    })
+
+    // validate resp
+    expect(res.status).toBe(404)
+    expect(res.body).toMatch(/no libraries to be found/i)
+})

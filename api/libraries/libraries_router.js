@@ -136,7 +136,7 @@ router.put("/", [
 //delete library by id
 router.delete("/:id", [
     param("id")
-        .isInt().withMessage("Id must be an integer")
+        .isInt().withMessage("must be an integer")
         ,
     ], handle_fail_valitions, check_db, async (req, res, next) => {
     
@@ -153,8 +153,14 @@ router.delete("/:id", [
 function handle_fail_valitions(req, res, next){
     // handle fail validations
     const errors = validationResult(req)
+    
+    // if there is only one error take it out of the array
+    let error_list = errors.array()
+    if(error_list.length == 1) error_list = error_list[0] 
+    
+    // resp with list of errors
     const is_errors = !errors.isEmpty()
-    if (is_errors) return res.status(404).json(errors.array())
+    if (is_errors) return res.status(404).json(error_list)
 
     //no fail validation, then go to the next middleware
     next()

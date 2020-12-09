@@ -38,8 +38,7 @@ router.get("/:id", [
     res.status(200).json(req.library)
 })
 
-// todo: change resource name from find... to name/:name
-router.get("/findlibrarybyname/:name", [
+router.get("/name/:name", [
     param("name")
         .isAlpha().withMessage("Name must be letters.")
         ,   

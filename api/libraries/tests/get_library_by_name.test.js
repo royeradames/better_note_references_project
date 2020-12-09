@@ -9,7 +9,7 @@ const prepTestDB = require("../../../helpers/prepTestDB")
 beforeEach(prepTestDB)
 
 //local global endpoint url
-const url = "/libraries/findlibrarybyname"
+const url = "/libraries/name"
 
 describe("200", () => {
     it("given name IS ON database", async () => {

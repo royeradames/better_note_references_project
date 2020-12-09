@@ -36,9 +36,9 @@ describe("404", () => {
 
         //validate server response
         expect(res.status).toBe(404)
-        expect(res.body[0].value).toMatch(/123/i)
-        expect(res.body[0].msg).toMatch(/must be letters/i)
-        expect(res.body[0].param).toMatch(/name/i)
+        expect(res.body.value).toMatch(/123/i)
+        expect(res.body.msg).toMatch(/must be letters/i)
+        expect(res.body.param).toMatch(/name/i)
     })
 })
 

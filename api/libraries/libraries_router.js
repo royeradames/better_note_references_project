@@ -5,7 +5,9 @@ const router = require("express").Router()
 const Libraries = require("./libraries_model")
 
 //import dependencies
-const { param, body, validationResult } = require("express-validator")
+const { param, body } = require("express-validator")
+
+const handle_fail_valitions = require("../../helpers/handle_fail_valitions")
 
 router.get("/", async (req, res, next) => {
     try {
@@ -109,7 +111,7 @@ router.put("/", [
         .optional()
         .isURL().withMessage("must be a valid link")
     ,
-], handle_fail_valitions, check_db, async (req, res, next) => {
+], handle_fail_valitions, check_db, body_data, async (req, res, next) => {
     try {
         
         //collect all inputs
@@ -124,8 +126,8 @@ router.put("/", [
         if (is_description) update_library_data.description = req.body.description
         if (is_tag_name) update_library_data.tag_name = req.body.tag_name
         if (is_link) update_library_data.link = req.body.link
-        //update library on the db
-        const updated_library = await Libraries.update_by_id(req.body.id, update_library_data) 
+        // update library on the db
+        const updated_library = await Libraries.update_by_id(req.body.id, req.body_data) 
 
         //response with the updated library
         res.status(200).json(updated_library)
@@ -147,23 +149,27 @@ router.delete("/:id", [
 })
 
 //local middleware
-//  todo: move body data collection 
-//  todo: move backend valiation into helper dictory 
+function body_data(req, res, next){
+        //collect all inputs
+        let body_data = {}
 
-function handle_fail_valitions(req, res, next){
-    // handle fail validations
-    const errors = validationResult(req)
-    
-    // if there is only one error take it out of the array
-    let error_list = errors.array()
-    if(error_list.length == 1) error_list = error_list[0] 
-    
-    // resp with list of errors
-    const is_errors = !errors.isEmpty()
-    if (is_errors) return res.status(404).json(error_list)
+        //inputs
+        const is_name = req.body.name
+        const is_description = req.body.description
+        const is_tag_name = req.body.tag_name
+        const is_link = req.body.link
 
-    //no fail validation, then go to the next middleware
-    next()
+        //if the value was given then add it to the update_library_data package
+        if (is_name) body_data.name = req.body.name
+        if (is_description) body_data.description = req.body.description
+        if (is_tag_name) body_data.tag_name = req.body.tag_name
+        if (is_link) body_data.link = req.body.link
+
+        // save body data on the req for next middleware
+        req.body_data = body_data
+
+        // move to next middleware
+        next()
 }
 async function no_duplicates(req, res, next){
         //body name must not be found

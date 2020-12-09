@@ -22,7 +22,7 @@ it("delete a library", async () => {
     expect(res.status).toBe(200)
     expect(res.body.deleted_library.name).toMatch(/express/i)
 })
-it("validation works", async () => {
+it("only accepts integers", async () => {
     //request resource
     const res = await request(server).delete(`${url}a`)
 
@@ -41,4 +41,4 @@ it("404 if there is no matching library to delete", async () => {
     expect(res.status).toBe(404)
     expect(res.body).toMatch(/no libraries to be found/i)
 })
-it.todo("404 if there is no avaliable library to delete")
+it.todo("404 cannot find id")

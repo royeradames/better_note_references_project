@@ -29,7 +29,7 @@ it("invalid id", async () => {
     const res = await request(server).get(`${url}/a`)
 
     //validate server response
-    expect(res.body[0].value).toMatch(/a/i)
-    expect(res.body[0].param).toMatch(/id/i)
+    expect(res.body.value).toMatch(/a/i)
+    expect(res.body.param).toMatch(/id/i)
 })
 

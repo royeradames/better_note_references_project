@@ -3,7 +3,7 @@ const server = require("../../server")
 const request = require("supertest")
 
 //database
-// const db = require("../../../dbConfig")
+const db = require("../../../db/dbConfig")
 
 // prep test database
 const prepTestDB = require("../../../helpers/prepTestDB")
@@ -30,5 +30,15 @@ it("validation works", async () => {
     expect(res.status).toBe(404)
     expect(res.body.msg).toMatch(/must be an integer/i)
 })
-it.todo("404 if there is no matching library to delete")
+it("404 if there is no matching library to delete", async () => {
+    //delete all libraries
+    await db("libraries").delete()
+
+    //request resource
+    const res = await request(server).delete(`${url}1`)
+
+    //validate resp
+    expect(res.status).toBe(404)
+    expect(res.body).toMatch(/no libraries to be found/i)
+})
 it.todo("404 if there is no avaliable library to delete")

@@ -41,4 +41,11 @@ it("404 if there is no matching library to delete", async () => {
     expect(res.status).toBe(404)
     expect(res.body).toMatch(/no libraries to be found/i)
 })
-it.todo("404 cannot find id")
+it("404 cannot find id", async () => {
+    //check for a out of bound id
+    const res = await request(server).delete(`${url}123456`)
+
+    //validate resp
+    expect(res.status).toBe(404)
+    expect(res.body.error).toMatch(/invalid id/i)
+})

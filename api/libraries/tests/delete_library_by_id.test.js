@@ -22,6 +22,13 @@ it("delete a library", async () => {
     expect(res.status).toBe(200)
     expect(res.body.deleted_library.name).toMatch(/express/i)
 })
-it.todo("validation works")
+it("validation works", async () => {
+    //request resource
+    const res = await request(server).delete(`${url}a`)
+
+    //check validation is working
+    expect(res.status).toBe(404)
+    expect(res.body.msg).toMatch(/must be an integer/i)
+})
 it.todo("404 if there is no matching library to delete")
 it.todo("404 if there is no avaliable library to delete")

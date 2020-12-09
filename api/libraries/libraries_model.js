@@ -26,7 +26,7 @@ async function update_by_id(id, data){
 async function new_library(library_data){
     await db("libraries")
         .insert(library_data)
-    return db("libraries").where({name: library_data.name})
+    return db("libraries").where({name: library_data.name}).first()
 }
 async function find_by_id(id){
     return db("libraries").select("*").where({id})

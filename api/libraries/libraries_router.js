@@ -67,22 +67,11 @@ router.post("/", [
         .optional()
         .isURL()
     ,
-], handle_fail_valitions, no_duplicates, async (req, res) => {
-    // collect all validated inputs
-    let new_library_data = {}
-    //inputs
-    const is_name = req.body.name
-    const is_description = req.body.description
-    const is_tag_name = req.body.tag_name
-    const is_link = req.body.link
-    //if the value was given then add it to the new_library_data package
-    if (is_name) new_library_data.name = req.body.name
-    if (is_description) new_library_data.description = req.body.description
-    if (is_tag_name) new_library_data.tag_name = req.body.tag_name
-    if (is_link) new_library_data.link = req.body.link
+], handle_fail_valitions, no_duplicates, body_data, async (req, res) => {
 
     //add valid inputs to the database
-    const new_library = (await Libraries.new_library(new_library_data))[0]
+    const new_library = (await Libraries.new_library(req.body_data))
+    
     //return a response saying that it was successful
     // says "created"
     res.status(200).json({new_library})

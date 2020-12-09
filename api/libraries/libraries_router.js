@@ -198,7 +198,7 @@ async function check_db(req, res, next){
             } 
             else if (libraries_found){
                 // if there is libraries to be found and it was not
-                res.status(404).json({error: "Invalid ID"})
+                res.status(404).json({error: "invalid ID"})
             }
             else {
                 // no library to be found

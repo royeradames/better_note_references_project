@@ -13,6 +13,8 @@ const handle_fail_valitions = require("../../helpers/handle_fail_valitions")
 router.get("/", async (req, res, next) => {
     try {
         //gather all query options
+        // default values does not affect selecting libraries
+        // all_libraries overwrites limit
         const options = {
             all_libraries: req.query.get_all_libraries,
             limit:  req.query.limit || 10, //defaults to 10 if non are promived

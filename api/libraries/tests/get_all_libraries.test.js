@@ -15,13 +15,13 @@ beforeEach(prepTestDB)
 const url = "/libraries/"
 
 // get all libaries 
-it("/ 200 return all libraries", async () =>{
-    //call server 
+it("check that all query returns all libraries", async () => {
+    // request resource
     const res = await request(server).get(url)
 
-    //validate server response
+    // validate resp
     expect(res.status).toBe(200)
-    expect(res.body[0].name).toMatch(/express/i)
+    expect(res.body.length).toBe(29) // total testing libraries is 29 
 })
 
 it(" 404 no libraries", async() => {
@@ -46,6 +46,6 @@ it("check all query strings work", async () => {
     expect(res.body[1].id).not.toBe(27)
 
 })
-it.todo("check that all query returns all labraries")
+
 it.todo("avoid a list of libraries")
 it.todo("check all validations work")

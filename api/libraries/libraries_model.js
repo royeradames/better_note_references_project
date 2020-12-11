@@ -47,7 +47,7 @@ async function get_all_libraries(is_get_all, options){
         .limit(options.limit)
         .orderBy("id", options.order)
         .offset(options.offset)
-        .whereNot('id', options.avoid)
+        .whereNotIn('id', JSON.parse(options.avoid))
     }
         
 }

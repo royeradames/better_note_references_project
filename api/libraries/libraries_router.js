@@ -16,15 +16,17 @@ router.get("/", async (req, res, next) => {
         // default values does not affect selecting libraries
         // all_libraries overwrites limit
         const options = {
-            all_libraries: req.query.get_all_libraries,
-            limit:  req.query.limit || 10, //defaults to 10 if non are promived
+            limit:  req.query.limit || 1, //defaults values after ||
             order: req.query.order || "asc",
             offset: req.query.offset || 0,
             avoid: req.query.avoid || 0,
         }
 
+        // if there is no options selected, resp with all libraries
+       const is_get_all = req.query.limit ||  req.query.order || req.query.offset || req.query.avoid? false: true
+
         //get all libraries on the database
-        const libraries = await Libraries.get_all_libraries(options)
+        const libraries = await Libraries.get_all_libraries(is_get_all, options)
         
         //if there is liraries data, give them to the client
         // else tell the client that their is no data

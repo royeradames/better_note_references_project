@@ -19,7 +19,7 @@ router.get("/", async (req, res, next) => {
             limit:  req.query.limit || 1, //defaults values after ||
             order: req.query.order || "asc",
             offset: req.query.offset || 0,
-            avoid: req.query.avoid || 0,
+            avoid: req.query.avoid || JSON.stringify([0]),
         }
 
         // if there is no options selected, resp with all libraries

@@ -7,13 +7,22 @@ const Libraries = require("./libraries_model")
 //import dependencies
 const { param, body } = require("express-validator")
 
+//global middleware
 const handle_fail_valitions = require("../../helpers/handle_fail_valitions")
-
+//todo: run this router tests
 router.get("/", async (req, res, next) => {
     try {
-        // todo: limit how many libraries you get back, and in what order you are searching asc, desc. String literals
+        //gather all query options
+        const options = {
+            all_libraries: req.query.get_all_libraries,
+            limit:  req.query.limit || 10, //defaults to 10 if non are promived
+            order: req.query.order || "asc",
+            offset: req.query.offset || 0,
+            avoid: req.query.avoid || 0,
+        }
+
         //get all libraries on the database
-        const libraries = await Libraries.get_all_libraries()
+        const libraries = await Libraries.get_all_libraries(options)
         
         //if there is liraries data, give them to the client
         // else tell the client that their is no data

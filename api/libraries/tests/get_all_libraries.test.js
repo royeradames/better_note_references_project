@@ -37,15 +37,25 @@ it(" 404 no libraries", async() => {
 
 it("check all query strings work", async () => {
     //request resource
-    const res = await request(server).get(`${url}?limit=5&order=desc&offset=1&avoid=27`)
+    const res = await request(server).get(`${url}?limit=5&order=desc&offset=1`)
 
     //validate resp 
     expect(res.status).toBe(200)
     expect(res.body.length).toBe(5)
     expect(res.body[0].id).toBe(28)
-    expect(res.body[1].id).not.toBe(27)
 
 })
 
-it.todo("avoid a list of libraries")
+it("avoid a list of libraries", async () => {
+    // list of items to avoid
+    const avoid = JSON.stringify([2,3,4])
+
+    // request resource
+    const res = await request(server).get(`${url}?limit=5&avoid=${avoid}`) 
+    // validate resp
+    expect(res.status).toBe(200)
+    expect(res.body[1].id).not.toBe(2)
+    expect(res.body[2].id).not.toBe(3)
+    expect(res.body[3].id).not.toBe(4)
+})
 it.todo("check all validations work")

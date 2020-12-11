@@ -32,8 +32,23 @@ async function find_by_id(id){
     return db("libraries").select("*").where({id})
 }
 
-async function get_all_libraries(){
-    return db("libraries")
+async function get_all_libraries(options){
+    // activate all query strings options
+    // default values does not affect a general select * from libraries 
+    let query = db("libraries")
+        .orderBy("id", options.order)
+        .offset(options.offset)
+        .whereNot('id', options.avoid)
+
+    //  or return all libraries
+    if(options.get_all_libraries){
+        return query
+    }
+    else{
+        // limit the results
+       return query.limit(options.limit)
+    }
+        
 }
 
 async function find_by_name(name){

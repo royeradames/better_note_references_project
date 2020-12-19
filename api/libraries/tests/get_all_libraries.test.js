@@ -128,4 +128,18 @@ describe("check all validations work", () => {
         expect(res.body[2].id).toBe(27)
 
     })
+    it("check avoid fails if it's not an array", async () => {
+        // generate avoid input like front-end would 
+        const avoid = JSON.stringify("1,2")
+
+        // request server with invalid inputs
+        const res = await request(server).get(`${url}?limit=10&avoid=${avoid}`)
+
+        // validate resp
+        expect(res.status).toBe(404)
+        expect(res.body.param).toMatch(/avoid/i)
+        expect(res.body.value).toMatch(/1/i)
+        expect(res.body.msg).toMatch(/must be an array/i)
+
+    })
 })

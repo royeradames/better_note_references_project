@@ -95,7 +95,18 @@ describe("check all validations work", () => {
         expect(res.body[3].value).toMatch(/a/i)
         expect(res.body[3].msg).toMatch(/must only contain numbers/i)
     })
-    it.todo("limit error if when value is less than 1")
+    it("check limit error if when value is less than 1", async () => {
+
+        //request server with invalid inputs
+        const res = await request(server).get(`${url}?limit=0`)
+
+        // validate resp
+        console.log(res.body)
+        expect(res.status).toBe(404)
+        expect(res.body.value).toMatch(/0/i)
+        expect(res.body.msg).toMatch(/must be a whole number from 1 to 100/i)
+        
+    })
     it.todo("selecting asc works")
     it.todo("selecting desc works")
 })

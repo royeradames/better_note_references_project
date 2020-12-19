@@ -117,5 +117,15 @@ describe("check all validations work", () => {
         expect(res.body[1].id).toBe(2)
         expect(res.body[2].id).toBe(3)
     })
-    it.todo("selecting desc works")
+    it("selecting desc works", async() => {
+        //request server with invalid inputs
+        const res = await request(server).get(`${url}?limit=10&order=desc`)
+
+        // validate resp
+        expect(res.status).toBe(200)
+        expect(res.body[0].id).toBe(29)
+        expect(res.body[1].id).toBe(28)
+        expect(res.body[2].id).toBe(27)
+
+    })
 })

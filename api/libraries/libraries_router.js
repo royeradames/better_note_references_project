@@ -26,21 +26,18 @@ router.get("/", [
     query("avoid")
         .optional()
         .custom( values => {
+                
             // convert the inputs into js
+            let avoid_array_int 
             try {
-                const avoid_array_int = JSON.parse(values)
-  
-            } catch (error) {
-                throw new Error("query must be pass as JSON array")
+                avoid_array_int = JSON.parse(values)
+            } catch {
+                throw new Error("not a valid query input")
             } 
 
             // check that there is an array
             const is_not_array = !Array.isArray(avoid_array_int)
-            if(is_not_array) 
-            {
-                throw new Error('must be an array')
-
-            }
+            if(is_not_array) throw new Error("must be an array")
 
             //check that the array only has integers 
             let array_has_non_nums =  false

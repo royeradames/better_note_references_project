@@ -94,6 +94,8 @@ describe("check all validations work", () => {
         expect(res.body[3].param).toMatch(/avoid/i)
         expect(res.body[3].value).toMatch(/a/i)
         expect(res.body[3].msg).toMatch(/must only contain numbers/i)
-
     })
+    it.todo("limit error if when value is less than 1")
+    it.todo("selecting asc works")
+    it.todo("selecting desc works")
 })

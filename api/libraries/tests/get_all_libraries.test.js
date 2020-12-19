@@ -58,4 +58,42 @@ it("avoid a list of libraries", async () => {
     expect(res.body[2].id).not.toBe(3)
     expect(res.body[3].id).not.toBe(4)
 })
-it.todo("check all validations work")
+describe("check all validations work", () => {
+        /*
+            what are the validations?
+            limit
+            -integer
+            -min 1 - max 100
+            order
+            - one of asc or desc
+            offset
+            - integer
+            avoid
+            - array
+            - integers
+        */
+    
+
+    
+    it("fail because \n - limit not a integer, \n - order not asc or desc, \n - offset not an ineger, \n - avoid not integer", async () => {
+        
+        //request server with invalid inputs
+        const res = await request(server).get(`${url}?limit=101&order=error&offset=a&avoid=[1, "a"]`)
+
+        // validate resp
+        expect(res.status).toBe(404)
+        expect(res.body[0].param).toMatch(/limit/i)
+        expect(res.body[0].value).toMatch(/101/i)
+        expect(res.body[0].msg).toMatch(/must be a whole number from 1 to 100/i)
+        expect(res.body[1].param).toMatch(/order/i)
+        expect(res.body[1].value).toMatch(/error/i)
+        expect(res.body[1].msg).toMatch(/must be asc or desc/i)
+        expect(res.body[2].param).toMatch(/offset/i)
+        expect(res.body[2].value).toMatch(/a/i)
+        expect(res.body[2].msg).toMatch(/must be a integer/i)
+        expect(res.body[3].param).toMatch(/avoid/i)
+        expect(res.body[3].value).toMatch(/a/i)
+        expect(res.body[3].msg).toMatch(/must only contain numbers/i)
+
+    })
+})

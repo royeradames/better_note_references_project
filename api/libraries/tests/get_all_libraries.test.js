@@ -106,15 +106,16 @@ describe("check all validations work", () => {
         expect(res.body.msg).toMatch(/must be a whole number from 1 to 100/i)
         
     })
-    // it("selecting asc works", async () => {
+    it("selecting asc works", async () => {
 
-    //     //request server with invalid inputs
-    //     const res = await request(server).get(`${url}?order=asc`)
+        //request server with invalid inputs
+        const res = await request(server).get(`${url}?limit=10&order=asc`)
 
-    //     // validate resp
-    //     console.log(res.body)
-    //     expect(res.status).toBe(400)
-
-    // })
+        // validate resp
+        expect(res.status).toBe(200)
+        expect(res.body[0].id).toBe(1)
+        expect(res.body[1].id).toBe(2)
+        expect(res.body[2].id).toBe(3)
+    })
     it.todo("selecting desc works")
 })

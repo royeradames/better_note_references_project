@@ -5,12 +5,53 @@ const router = require("express").Router()
 const Libraries = require("./libraries_model")
 
 //import dependencies
-const { param, body } = require("express-validator")
+const { param, body, query } = require("express-validator")
 
 //global middleware
 const handle_fail_valitions = require("../../helpers/handle_fail_valitions")
 //todo: run this router tests
-router.get("/", async (req, res, next) => {
+router.get("/", [
+    query("limit")
+        .isInt({min:1, max: 100}).withMessage("must be a whole number from 1 to 100")
+        .optional()
+        ,
+    query("order")
+        .isIn(["asc", "desc", "ASC", "DESC"]).withMessage("must be asc or desc")
+        .optional()
+        ,
+    query("offset")
+        .isInt().withMessage("must be a integer")
+        .optional()
+        ,
+    query("avoid")
+        .optional()
+        .custom( values => {
+            // convert the 
+            const avoid_array_int = JSON.parse(values)
+
+            // check that there is an array
+            const is_not_array = !Array.isArray(avoid_array_int)
+            if(is_not_array) 
+            {
+                throw new Error('must be an array')
+
+            }
+
+            //check that the array only has integers 
+            let array_has_non_nums =  false
+            
+            avoid_array_int.forEach(value => {
+                const is_not_int = !Number.isInteger(value)
+                // check all avoid list values for them being integers
+                if(is_not_int) array_has_non_nums = true
+            })
+            if (array_has_non_nums) throw new Error('must only contain numbers')
+
+            // every is has expected
+            return true
+        })
+        ,
+], handle_fail_valitions, async (req, res, next) => {
     try {
         //gather all query options
         // default values does not affect selecting libraries

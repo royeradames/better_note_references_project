@@ -59,22 +59,6 @@ it("avoid a list of libraries", async () => {
     expect(res.body[3].id).not.toBe(4)
 })
 describe("check all validations work", () => {
-        /*
-            what are the validations?
-            limit
-            -integer
-            -min 1 - max 100
-            order
-            - one of asc or desc
-            offset
-            - integer
-            avoid
-            - array
-            - integers
-        */
-    
-
-    
     it("fail because \n - limit not a integer, \n - order not asc or desc, \n - offset not an ineger, \n - avoid not integer", async () => {
         
         //request server with invalid inputs

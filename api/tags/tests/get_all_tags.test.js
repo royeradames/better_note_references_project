@@ -35,3 +35,15 @@ it("no tags available, returns a message saying so", async () => {
     expect(res.status).toBe(404)
     expect(res.body).toMatch(/no tags/i)
 })
+it.todo("check limit, order, and avoid options work")
+describe("check validation works", () => {
+    describe("check limit falls within range", ()=> {
+        it.todo("check that limit fail if you want 0 things")
+        it.todo("check that limit fail if you want 101 things")
+        it.todo("check that limit pass if you want something within range")
+    })
+   it.todo("check order can be set on desc") 
+   it.todo("check order can be set on asc") 
+   it.todo("check avoid can ignore unwanted tags") 
+   it.todo("check avoid can fails if not pass down a valid name") 
+})

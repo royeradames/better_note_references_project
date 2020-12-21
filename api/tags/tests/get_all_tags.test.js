@@ -48,9 +48,6 @@ it("check limit, order, and avoid options work", async () => {
     expect(res.body[1]).toMatch(/backend/i)
 })
 it("check avoid defaul value works", async () => {
-    //create an avoid list like the front end would
-    const avoid_list = JSON.stringify(["general"])
-
     //call server
     const res = await request(server).get(`${url}?limit=20&order=desc`)
 
@@ -64,7 +61,9 @@ it("check avoid defaul value works", async () => {
 })
 describe("check validation works", () => {
     describe("check limit falls within range", ()=> {
-        it.todo("check that limit fail if you want 0 things")
+        it("check that limit fail if you want 0 things", async () => {
+
+        })
         it.todo("check that limit fail if you want 101 things")
         it.todo("check that limit pass if you want something within range")
     })

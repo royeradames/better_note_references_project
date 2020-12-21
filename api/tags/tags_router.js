@@ -10,8 +10,19 @@ const {body, validationResult} = require ("express-validator")
 // return all tags  
 router.get("/", async (req, res, next) => {
     try {
+        //gather all query options
+        // default values does not affect selecting libraries
+        const options = {
+            limit:  req.query.limit || 10, //defaults values after ||
+            order: req.query.order || "asc",
+            avoid: req.query.avoid || JSON.stringify([0]),
+        }
+
+        // if there is no options selected, resp with all libraries
+       const is_get_all = req.query.limit ||  req.query.order || req.query.avoid ? false: true
+
        //get all tags from db
-       const tags = await Tags.get_all_tags() 
+       const tags = await Tags.get_all_tags(is_get_all, options) 
 
        const is_tags_here = tags.length
        if(is_tags_here){

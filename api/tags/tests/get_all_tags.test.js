@@ -43,7 +43,6 @@ it("check limit, order, and avoid options work", async () => {
     const res = await request(server).get(`${url}?limit=20&order=desc&avoid=${avoid_list}`)
 
     //validate server resp
-    console.log(res.body)
     expect(res.status).toBe(200)
     expect(res.body[0]).toMatch(/frontend/i)
     expect(res.body[1]).toMatch(/backend/i)

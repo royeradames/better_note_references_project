@@ -50,7 +50,7 @@ describe('client errors', () => {
 
         //check server responds
         expect(res.status).toBe(404)
-        expect(res.body[0].value).toMatch(/express.js/i)
-        expect(res.body[0].param).toMatch(/name/i)
+        expect(res.body.value).toMatch(/express.js/i)
+        expect(res.body.param).toMatch(/name/i)
     })
 })

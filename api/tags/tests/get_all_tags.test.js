@@ -35,7 +35,19 @@ it("no tags available, returns a message saying so", async () => {
     expect(res.status).toBe(404)
     expect(res.body).toMatch(/no tags/i)
 })
-it.todo("check limit, order, and avoid options work")
+it("check limit, order, and avoid options work", async () => {
+    //create an avoid list like the front end would
+    const avoid_list = JSON.stringify(["general"])
+
+    //call server
+    const res = await request(server).get(`${url}?limit=20&order=desc&avoid=${avoid_list}`)
+
+    //validate server resp
+    console.log(res.body)
+    expect(res.status).toBe(200)
+    expect(res.body[0]).toMatch(/frontend/i)
+    expect(res.body[1]).toMatch(/backend/i)
+})
 describe("check validation works", () => {
     describe("check limit falls within range", ()=> {
         it.todo("check that limit fail if you want 0 things")

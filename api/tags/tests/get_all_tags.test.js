@@ -52,7 +52,6 @@ it("check avoid defaul value works", async () => {
     const res = await request(server).get(`${url}?limit=20&order=desc`)
 
     //validate server resp
-    console.log(res.body)
     expect(res.status).toBe(200)
     expect(res.body[0]).toMatch(/general/i)
     expect(res.body[1]).toMatch(/frontend/i)
@@ -62,6 +61,16 @@ it("check avoid defaul value works", async () => {
 describe("check validation works", () => {
     describe("check limit falls within range", ()=> {
         it("check that limit fail if you want 0 things", async () => {
+            //create an avoid list like the front end would
+            const avoid_list = JSON.stringify(["general"])
+
+            //call server
+            const res = await request(server).get(`${url}?limit=0&order=desc&avoid=${avoid_list}`)
+
+            //validate server resp
+            expect(res.status).toBe(404)
+            expect(res.body.value).toMatch(/0/i)
+            expect(res.body.msg).toMatch(/must be a whole number from 1 to 100/i)
 
         })
         it.todo("check that limit fail if you want 101 things")

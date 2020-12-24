@@ -73,7 +73,16 @@ describe("check validation works", () => {
             expect(res.body.msg).toMatch(/must be a whole number from 1 to 100/i)
 
         })
-        it.todo("check that limit fail if you want 101 things")
+        it("check that limit fail if you want 101 things", async () => {
+            //call server
+            const res = await request(server).get(`${url}?limit=0`)
+
+            //validate server resp
+            expect(res.status).toBe(404)
+            expect(res.body.value).toMatch(/0/i)
+            expect(res.body.msg).toMatch(/must be a whole number from 1 to 100/i)
+
+        })
         it.todo("check that limit pass if you want something within range")
     })
    it.todo("check order can be set on desc") 

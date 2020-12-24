@@ -75,15 +75,25 @@ describe("check validation works", () => {
         })
         it("check that limit fail if you want 101 things", async () => {
             //call server
-            const res = await request(server).get(`${url}?limit=0`)
+            const res = await request(server).get(`${url}?limit=101`)
 
             //validate server resp
             expect(res.status).toBe(404)
-            expect(res.body.value).toMatch(/0/i)
+            expect(res.body.value).toEqual("101")
             expect(res.body.msg).toMatch(/must be a whole number from 1 to 100/i)
 
         })
-        it.todo("check that limit pass if you want something within range")
+        it("check that limit pass if you want something within range", async () => {
+            //call server
+            const res = await request(server).get(`${url}?limit=10`)
+
+            //validate server resp
+            expect(res.status).toBe(200)
+            expect(res.body).toHaveLength(3)
+            expect(res.body[0]).toMatch(/backend/i)
+            expect(res.body[2]).toMatch(/general/i)
+
+        })
     })
    it.todo("check order can be set on desc") 
    it.todo("check order can be set on asc") 

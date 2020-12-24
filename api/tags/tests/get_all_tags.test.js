@@ -106,7 +106,17 @@ describe("check validation works", () => {
             expect(res.body[2]).toMatch(/backend/i)
 
     }) 
-    it.todo("check order can be set on asc") 
+   it("check order can be set on asc", async () => {
+        //call server
+        const res = await request(server).get(`${url}?order=asc`)
+
+        //validate server resp
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveLength(3)
+        expect(res.body[0]).toMatch(/backend/i)
+        expect(res.body[2]).toMatch(/general/i)
+
+   }) 
    it.todo("check avoid can ignore unwanted tags") 
    it.todo("check avoid can fails if not pass down a valid name") 
 })

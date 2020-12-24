@@ -127,5 +127,14 @@ describe("check validation works", () => {
         expect(res.body[0]).toMatch(/frontend/i)
 
    }) 
-   it.todo("check avoid can fails if not pass down a valid name") 
+   it("check avoid can fails if not pass down a valid alphabet only name", async () => {
+        //call server
+        const res = await request(server).get(`${url}?avoid=["backend2019"]`)
+
+        //validate server resp
+        expect(res.status).toBe(404)
+        expect(res.body.value).toMatch(/backend2019/i)
+        expect(res.body.msg).toMatch(/must only contain alphabet letters/i)
+
+   }) 
 })

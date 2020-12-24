@@ -5,10 +5,56 @@ const router = require("express").Router()
 const Tags = require("./tags_model")
 
 //import validation checker
-const {body, validationResult} = require ("express-validator")
+const {body, validationResult, query} = require ("express-validator")
+const validator = require("validator")
+
 
 // return all tags  
-router.get("/", async (req, res, next) => {
+router.get("/", [
+    query("limit")
+        .isInt({min:1, max: 100}).withMessage("must be a whole number from 1 to 100")
+        .optional()
+        ,
+    query("order")
+        .isIn(["asc", "desc", "ASC", "DESC"]).withMessage("must be asc or desc")
+        .optional()
+        ,
+    query("offset")
+        .isInt().withMessage("must be a integer")
+        .optional()
+        ,
+    query("avoid")
+        .optional()
+        .custom( values => {
+                
+            // convert the inputs into js
+            let avoid_array_int 
+            try {
+                avoid_array_int = JSON.parse(values)
+            } catch {
+                throw new Error("not a valid query input")
+            } 
+
+            // check that there is an array
+            const is_not_array = !Array.isArray(avoid_array_int)
+            if(is_not_array) throw new Error("must be an array")
+
+            //check that the array only has integers 
+            let array_has_non_alphas =  false
+            
+            avoid_array_int.forEach(value => {
+                
+                const is_not_alpha = !validator.isAlpha(value)
+                // check all avoid list values for them being integers
+                if(is_not_alpha) array_has_non_alphas = true
+            })
+            if (array_has_non_alphas) throw new Error('must only contain alphabet letters')
+
+            // every is has expected
+            return true
+        })
+        ,
+], handle_fail_valitions, async (req, res, next) => {
     try {
         //gather all query options
         // default values does not affect selecting libraries

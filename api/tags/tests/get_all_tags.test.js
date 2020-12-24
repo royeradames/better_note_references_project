@@ -117,6 +117,16 @@ describe("check validation works", () => {
         expect(res.body[2]).toMatch(/general/i)
 
    }) 
-   it.todo("check avoid can ignore unwanted tags") 
+   it("check avoid can ignore unwanted tags", async () => {
+        //call server
+        const res = await request(server).get(`${url}?avoid=["backend", "general"]`)
+
+        //validate server resp
+        console.log(res.body)
+        expect(res.status).toBe(200)
+        expect(res.body).toHaveLength(1)
+        expect(res.body[0]).toMatch(/frontend/i)
+
+   }) 
    it.todo("check avoid can fails if not pass down a valid name") 
 })

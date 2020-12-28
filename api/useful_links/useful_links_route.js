@@ -84,7 +84,7 @@ router.post("/new_link", [
     body("tag_name")
         .custom( async value => {
             // given tag name must be one of the tag from the tags table 
-            const is_in = (await get_all_tags()).includes(value) 
+            const is_in = (await get_all_tags(true)).includes(value) 
             if(is_in){
                 return true
             }

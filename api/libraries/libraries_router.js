@@ -88,7 +88,7 @@ router.get("/:id", [
     param("id")
         .isInt().withMessage("Id must be an integer")
         ,
-    ], handle_fail_valitions, check_db, async (req, res, next) => {
+    ], handle_fail_valitions, check_db,  (req, res ) => {
 
     //return library
     res.status(200).json(req.library)
@@ -235,9 +235,15 @@ async function check_db(req, res, next){
         const id = req.params.id || req.body.id
         const is_id_input = id
         if(is_id_input){
+            
             // check if there is one or more libraries to find
-            const libraries_found = (await Libraries.get_all_libraries()).length
-
+            const libraries_found = (await Libraries.get_all_libraries(false, { 
+                limit:  req.query.limit || 1, //defaults values after ||
+                order: req.query.order || "asc",
+                offset: req.query.offset || 0,
+                avoid: req.query.avoid || JSON.stringify([0]),
+            })).length
+            
             // find the library
             const library = (await Libraries.find_by_id(id))[0]
             const library_found = library

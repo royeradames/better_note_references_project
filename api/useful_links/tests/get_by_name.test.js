@@ -29,7 +29,7 @@ it("no links", async () => {
     await db("useful_links").delete()
 
     //get data from server
-    const res = await request(server).get(`${url}React+Component`)
+    const res = await request(server).get(`${url}React Component`)
 
     //check server data
     expect(res.status).toBe(404) 

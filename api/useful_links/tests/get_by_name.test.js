@@ -12,11 +12,11 @@ const prepTestDB = require("../../../helpers/prepTestDB")
 beforeEach(prepTestDB)
 
 //endpoint url
-const url = "/useful_links/name"
+const url = "/useful_links/name/"
 
 it("valid resp", async () => {
     // get resp from server
-    const res = await request(server).post(url).send({name: "React Component"})
+    const res = await request(server).get(`${url}React Component`)
 
     // validate server
     expect(res.status).toBe(200)
@@ -29,7 +29,7 @@ it("no links", async () => {
     await db("useful_links").delete()
 
     //get data from server
-    const res = await request(server).post(url).send({name: "React Component"})
+    const res = await request(server).get(`${url}React+Component`)
 
     //check server data
     expect(res.status).toBe(404) 
@@ -37,7 +37,7 @@ it("no links", async () => {
 })
 it("validation is working", async () => {
     //get resp from server
-    const res = await request(server).post(url).send({name: "nota-useful_@Link"})
+    const res = await request(server).get(`${url}nota-useful_@Link`)
 
     // validate server response
     expect(res.status).toBe(404)

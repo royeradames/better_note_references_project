@@ -4,8 +4,12 @@ const router = require("express").Router()
 // import Useful_links_model
 const Useful_links = require("./useful_links_model")
 const {get_all_tags} = require("../tags/tags_model")
+
 // import back-end validation tools
-const {body, param, validationResult} = require ("express-validator")
+const { body, param, validationResult} = require ("express-validator")
+
+//global middleware
+const handle_fail_valitions = require("../../helpers/handle_fail_valitions")
 
 // return all useful_links
 router.get("/", async (req, res, next) => {
@@ -34,7 +38,7 @@ router.get("/:id", [
 ], handle_fail_valitions, async (req, res, next) => {
     try {
         //get link from db
-       const useful_link = (await Useful_links.by_id(req.params.id))[0]
+       const useful_link = (await Useful_links.get_by_id(req.params.id))
        if(useful_link){
            res.status(200).json(useful_link)
        }
@@ -48,13 +52,13 @@ router.get("/:id", [
 })
 
 // get link by name
-router.post("/name", [
-    body("name")
+router.get("/name/:name", [
+    param("name")
         .matches(/^[a-zA-aZ_.,0-9?|\-<>()\/]+( [a-zA-Z\/_.,0-9?|\-<>()]+)*$/i).withMessage("Name can have have upper and lower case words, -, |, ., <, >, ?, (, ), / , (commads), _, and numbers ")
 ], handle_fail_valitions , async (req, res, next) => {
     try {
         //get link by name from db
-        const link = (await Useful_links.by_name(req.body.name))[0]        
+        const link = (await Useful_links.get_by_name(req.params.name))        
 
         if(link) {
             //resp with link
@@ -65,7 +69,6 @@ router.post("/name", [
         }
     } catch (error) {
         next(error)
-        
     }
 })
 //create new useful link
@@ -114,21 +117,5 @@ router.post("/new_link", [
         
     }
 })
-//local middleware
-function handle_fail_valitions(req, res, next){
-    // handle fail validations
-    const errors = validationResult(req)
-    
-    // if there is only one error take it out of the array
-    let error_list = errors.array()
-    if(error_list.length == 1) error_list = error_list[0] 
-    
-    // resp with list of errors
-    const is_errors = !errors.isEmpty()
-    if (is_errors) return res.status(404).json(error_list)
-
-    //no fail validation, then go to the next middleware
-    next()
-}
 
 module.exports = router

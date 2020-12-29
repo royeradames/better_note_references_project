@@ -4,8 +4,12 @@ const router = require("express").Router()
 // import Useful_links_model
 const Useful_links = require("./useful_links_model")
 const {get_all_tags} = require("../tags/tags_model")
+
 // import back-end validation tools
 const { body, param, validationResult} = require ("express-validator")
+
+//global middleware
+const handle_fail_valitions = require("../../helpers/handle_fail_valitions")
 
 // return all useful_links
 router.get("/", async (req, res, next) => {
@@ -113,21 +117,5 @@ router.post("/new_link", [
         
     }
 })
-//local middleware
-function handle_fail_valitions(req, res, next){
-    // handle fail validations
-    const errors = validationResult(req)
-    
-    // if there is only one error take it out of the array
-    let error_list = errors.array()
-    if(error_list.length == 1) error_list = error_list[0] 
-    
-    // resp with list of errors
-    const is_errors = !errors.isEmpty()
-    if (is_errors) return res.status(404).json(error_list)
-
-    //no fail validation, then go to the next middleware
-    next()
-}
 
 module.exports = router

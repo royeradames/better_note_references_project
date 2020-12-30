@@ -8,6 +8,8 @@ const Tags = require("./tags_model")
 const {body, validationResult, query} = require ("express-validator")
 const validator = require("validator")
 
+//global middleware
+const handle_fail_valitions = require("../../helpers/handle_fail_valitions")
 
 // return all tags  
 router.get("/", [
@@ -102,14 +104,4 @@ router.post("/newtag", [
     }
 })
 
-//local middleware
-function handle_fail_valitions(req, res, next){
-    // handle fail validations
-    const errors = validationResult(req)
-    const is_errors = !errors.isEmpty()
-    if (is_errors) return res.status(404).json(errors.array()[0])
-
-    //no fail validation, then go to the next middleware
-    next()
-}
 module.exports = router

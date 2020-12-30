@@ -14,3 +14,6 @@ beforeEach(prepTestDB)
 //local global endpoint url
 const url = "/tags/"
 
+it.todo("change tag name")
+it.todo("don't allow non alphabet names")
+it.todo("let the user know there is no tags when there is none")

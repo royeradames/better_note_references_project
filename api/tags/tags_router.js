@@ -104,4 +104,7 @@ router.post("/newtag", [
     }
 })
 
+//todo: create update 
+
+//todo: create delete tag
 module.exports = router

@@ -14,6 +14,17 @@ beforeEach(prepTestDB)
 //local global endpoint url
 const url = "/tags/"
 
-it.todo("change tag name")
+it("change tag name", async () => {
+    //call server
+    const res = await request(server).put(url).send({
+        tag: "frontend",
+        new_tag: "devops"
+    })
+
+    //validate server
+    console.log(res.body)
+    expect(res.status).toBe(200)    
+
+})
 it.todo("don't allow non alphabet names")
 it.todo("let the user know there is no tags when there is none")

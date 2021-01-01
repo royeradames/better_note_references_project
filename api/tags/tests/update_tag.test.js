@@ -26,6 +26,19 @@ it("change tag name", async () => {
     expect(res.body.old_tag_name).toMatch(/frontend/i)
     expect(res.body.new_tag_name).toMatch(/devops/i)
 })
-it.todo("don't allow non alphabet names")
+it("don't allow non alphabet names", async () => {
+    //call server
+    const res = await request(server).put(url).send({
+        tag: "1frontend",
+        new_tag: "1devops"
+    })
+
+    //validate server
+    console.log(res.body)
+    expect(res.status).toBe(404)    
+    expect(res.body.old_tag_name).toMatch(/frontend/i)
+    expect(res.body.new_tag_name).toMatch(/devops/i)
+
+})
 it.todo("let the user know there is no tags when there is none")
 it.todo("when no tags, check for valid resp")

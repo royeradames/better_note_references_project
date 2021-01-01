@@ -52,8 +52,7 @@ it("let the user know there is no tags when there is none", async () => {
     })
 
     //validate server
-    console.log(res.body)
-    expect(res.status).toBe(200)    
+    expect(res.status).toBe(404)    
+    expect(res.body).toMatch(/tag is not found/i)
 
 })
-it.todo("when no tags, check for valid resp")

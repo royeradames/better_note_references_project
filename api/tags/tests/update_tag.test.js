@@ -41,5 +41,19 @@ it("don't allow non alphabet names", async () => {
     expect(res.body[1].msg).toMatch(/must be alphabetic letters/i)
 
 })
-it.todo("let the user know there is no tags when there is none")
+it("let the user know there is no tags when there is none", async () => {
+    //delete db
+    await db("tags").delete()
+
+    //call server
+    const res = await request(server).put(url).send({
+        tag: "frontend",
+        new_tag: "devops"
+    })
+
+    //validate server
+    console.log(res.body)
+    expect(res.status).toBe(200)    
+
+})
 it.todo("when no tags, check for valid resp")

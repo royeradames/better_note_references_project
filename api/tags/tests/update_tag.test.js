@@ -22,7 +22,6 @@ it("change tag name", async () => {
     })
 
     //validate server
-    console.log(res.body)
     expect(res.status).toBe(200)    
     expect(res.body.old_tag_name).toMatch(/frontend/i)
     expect(res.body.new_tag_name).toMatch(/devops/i)

@@ -105,6 +105,39 @@ router.post("/newtag", [
 })
 
 //todo: create update 
+router.put("/", [
+    body("tag")
+        .isAlpha().withMessage("must be alphabetic letters")
+        ,
+    body("new_tag") 
+        .isAlpha().withMessage("must be alphabetic letters")
+], handle_fail_valitions, check_tag_here, async (req, res, next) => {
+    try {
+        
+        // pass tag id, and new tag name to the model
+        // to change the name
+        req.body.tag
+        req.body.new_tag
+
+        //let the user know that the new tag name has been set 
+       res.status(200).json("Working") 
+    } catch (error){
+        next(error)
+    }
+})
 
 //todo: create delete tag
+
+// local middleware
+async function check_tag_here (next, req, res) {
+    //check that the tag is on the db
+    const is_tag_found = await Tags.get_by_name(req.body.tag, req.body.new_tag) ? true: false
+   if (is_tag_found) {
+       next()
+   } 
+   else{
+       res.status(404).json("Tag is not found")
+   }
+
+}
 module.exports = router

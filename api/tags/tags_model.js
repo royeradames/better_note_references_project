@@ -3,8 +3,14 @@ const db = require("../../db/dbConfig")
 module.exports = {
     get_all_tags,
     post_new_tag,
+    get_by_name,
+    update_name,
 }
-
+async function update_name(tag, new_tag){
+    return db("tags")
+        .where({name: tag})
+        .update({name: new_tag})
+}
 async function get_all_tags(is_get_all, options){
     
     if(is_get_all){

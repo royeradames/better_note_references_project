@@ -6,14 +6,17 @@ module.exports = {
     get_by_name,
     update_name,
 }
-function get_by_name(tag){
-    return db("tags")
+async function get_by_name(tag){
+    const new_tag = await db("tags")
         .where({name: tag})
+        .first()
+    return new_tag.name 
 }
-function update_name(tag, new_tag){
-    return db("tags")
+async function update_name(tag, new_tag){
+    await db("tags")
         .where({name: tag})
         .update({name: new_tag})
+    return get_by_name(new_tag)
 }
 async function get_all_tags(is_get_all, options){
     

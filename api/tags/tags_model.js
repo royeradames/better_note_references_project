@@ -10,7 +10,8 @@ async function get_by_name(tag){
     const new_tag = await db("tags")
         .where({name: tag})
         .first()
-    return new_tag.name 
+    if (new_tag) return new_tag.name 
+    else return new_tag
 }
 async function update_name(tag, new_tag){
     await db("tags")

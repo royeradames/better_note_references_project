@@ -116,11 +116,19 @@ router.put("/", [
         
         // pass tag id, and new tag name to the model
         // to change the name
-        req.body.tag
-        req.body.new_tag
+        const updated_tag = await Tags.update_name(req.body.tag, req.body.new_tag) 
 
-        //let the user know that the new tag name has been set 
-       res.status(200).json("Working") 
+        if (updated_tag){
+            //let the user know that the new tag name has been set 
+            res.status(200).json({
+                old_tag_name: req.body.tag,
+                new_tag_name: updated_tag,
+            })
+        }
+        else{
+            res.status(404).json("could not update tag")
+        }
+        
     } catch (error){
         next(error)
     }
@@ -129,10 +137,10 @@ router.put("/", [
 //todo: create delete tag
 
 // local middleware
-async function check_tag_here (next, req, res) {
+async function check_tag_here (req, res, next) {
     //check that the tag is on the db
-    const is_tag_found = await Tags.get_by_name(req.body.tag, req.body.new_tag) ? true: false
-   if (is_tag_found) {
+    const is_tag_found = await Tags.get_by_name(req.body.tag) 
+  if (is_tag_found) {
        next()
    } 
    else{

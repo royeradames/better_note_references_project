@@ -6,7 +6,11 @@ module.exports = {
     get_by_name,
     update_name,
 }
-async function update_name(tag, new_tag){
+function get_by_name(tag){
+    return db("tags")
+        .where({name: tag})
+}
+function update_name(tag, new_tag){
     return db("tags")
         .where({name: tag})
         .update({name: new_tag})

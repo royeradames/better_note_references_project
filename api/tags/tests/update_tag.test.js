@@ -34,10 +34,11 @@ it("don't allow non alphabet names", async () => {
     })
 
     //validate server
-    console.log(res.body)
     expect(res.status).toBe(404)    
-    expect(res.body.old_tag_name).toMatch(/frontend/i)
-    expect(res.body.new_tag_name).toMatch(/devops/i)
+    expect(res.body[0].value).toMatch(/1frontend/i)
+    expect(res.body[0].msg).toMatch(/must be alphabetic letters/i)
+    expect(res.body[1].value).toMatch(/1devops/i)
+    expect(res.body[1].msg).toMatch(/must be alphabetic letters/i)
 
 })
 it.todo("let the user know there is no tags when there is none")

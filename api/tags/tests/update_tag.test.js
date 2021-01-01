@@ -28,3 +28,4 @@ it("change tag name", async () => {
 })
 it.todo("don't allow non alphabet names")
 it.todo("let the user know there is no tags when there is none")
+it.todo("when no tags, check for valid resp")

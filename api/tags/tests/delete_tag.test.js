@@ -21,8 +21,6 @@ it("delete a tag", async () => {
     const res = await request(server).delete(url).send({tag: "frontend"})
 
     // validate resp
-    console.log(res.body)
     expect(res.status).toBe(200)
-
-
+    expect(res.body.deleted_tag).toMatch(/frontend/i)
 })

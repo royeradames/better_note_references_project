@@ -136,19 +136,16 @@ router.put("/", [
 router.delete("/", [
     body("tag")
         .optional()
-        .isAlpha().withMessage("must be alphabetic letters211")
+        .isAlpha().withMessage("must be alphabetic letters")
        ,
 ], handle_fail_valitions, check_tag_here, async (req, res, next) => {
     try {
        //call model to delete tag
-       console.log("inside delete resource")
        const deleted_tag = await Tags.delete_by_name(req.body.tag)
 
        //resp with message that the dag is deleted
       res.status(200).json({deleted_tag}) 
     } catch (error) {
-        console.log("INside delete resource")
-        console.log(error)
         next(error)
         
     }

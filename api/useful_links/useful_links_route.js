@@ -118,4 +118,19 @@ router.post("/new_link", [
     }
 })
 
+// todo: create update resource by id
+router.put("/:id", [
+    param("id")
+        .isNumeric().withMessage("must be numeric")
+    ,
+], handle_fail_valitions, check_id, async(req, res, next) => {
+    //run sql to update id
+
+    // res with name previous and updated useful_link info
+})
+
+// todo: create delete resource by id
+
+// local middleware
+// todo: check id middleware
 module.exports = router

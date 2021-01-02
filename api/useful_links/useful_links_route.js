@@ -132,5 +132,20 @@ router.put("/:id", [
 // todo: create delete resource by id
 
 // local middleware
-// todo: check id middleware
+async function check_id(req, res, next) {
+    try {
+        //get link from db
+       const useful_link = (await Useful_links.get_by_id(req.params.id))
+       if(useful_link){
+           req.useful_link = useful_link
+           next()
+       }
+       else{
+           res.status(404).json("Link not found")
+       }
+    } catch (error) {
+        next(error)
+        
+    }
+}
 module.exports = router

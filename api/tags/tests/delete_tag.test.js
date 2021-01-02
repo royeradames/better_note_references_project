@@ -14,7 +14,16 @@ beforeEach(prepTestDB)
 //local global endpoint url
 const url = "/tags/"
 
-it.todo("only accept alphanumeric inputs ")
+it("only accept alphabet inputs ", async () => {
+    // request server
+    const res = await request(server).delete(url).send({tag: "123frontend"})
+
+    // validate resp
+    console.log(res.body)
+    expect(res.status).toBe(200)
+    expect(res.body.deleted_tag).toMatch(/frontend/i)
+
+})
 it("tag not found", async () => {
     // delete db
     await db("tags").delete()

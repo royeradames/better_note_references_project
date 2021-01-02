@@ -15,7 +15,17 @@ beforeEach(prepTestDB)
 const url = "/tags/"
 
 it.todo("only accept alphanumeric inputs ")
-it.todo("resp with a valid msg if there is no tag to delete")
+it("resp with a valid msg if there is no tag to delete", async () => {
+    // delete db
+    await db("tags").delete()
+    // request server
+    const res = await request(server).delete(url).send({tag: "frontend"})
+
+    // validate resp
+    console.log(res.body)
+    expect(res.status).toBe(200)
+
+})
 it("delete a tag", async () => {
     // request server
     const res = await request(server).delete(url).send({tag: "frontend"})

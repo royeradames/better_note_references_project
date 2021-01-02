@@ -5,6 +5,13 @@ module.exports = {
     post_new_tag,
     get_by_name,
     update_name,
+    delete_by_name,
+}
+async function delete_by_name(tag){
+    await db("tags")
+        .where({name: tag})
+        .delete()
+    return tag
 }
 async function get_by_name(tag){
     const new_tag = await db("tags")

@@ -12,9 +12,16 @@ const prepTestDB = require("../../../helpers/prepTestDB")
 beforeEach(prepTestDB)
 
 //endpoint url
-const url = "/useful_links/:id"
+const url = "/useful_links/"
 
-it.todo("update a useful_link")
+it("update a useful_link", async () => {
+    // request server
+    const res = await request(server).put(`${url}1`)
+
+    //validate resp
+   console.log(res.body) 
+   expect(res.status).toBe(200)
+})
 it.todo("only accept valid inputs")
 it.todo("no useful_link")
 

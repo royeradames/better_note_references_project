@@ -19,9 +19,9 @@ it("only accept alphabet inputs ", async () => {
     const res = await request(server).delete(url).send({tag: "123frontend"})
 
     // validate resp
-    console.log(res.body)
-    expect(res.status).toBe(200)
-    expect(res.body.deleted_tag).toMatch(/frontend/i)
+    expect(res.status).toBe(404)
+    expect(res.body.value).toMatch(/123frontend/i)
+    expect(res.body.msg).toMatch(/must be alphabetic letters/i)
 
 })
 it("tag not found", async () => {

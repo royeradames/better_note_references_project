@@ -104,7 +104,6 @@ router.post("/newtag", [
     }
 })
 
-//todo: create update 
 router.put("/", [
     body("tag")
         .isAlpha().withMessage("must be alphabetic letters")
@@ -134,10 +133,30 @@ router.put("/", [
     }
 })
 
-//todo: create delete tag
+router.delete("/", [
+    body("tag")
+        .optional()
+        .isAlpha().withMessage("must be alphabetic letters211")
+       ,
+], handle_fail_valitions, check_tag_here, async (req, res, next) => {
+    try {
+       //call model to delete tag
+       console.log("inside delete resource")
+       const deleted_tag = await Tags.delete_by_name(req.body.tag)
+
+       //resp with message that the dag is deleted
+      res.status(200).json({deleted_tag}) 
+    } catch (error) {
+        console.log("INside delete resource")
+        console.log(error)
+        next(error)
+        
+    }
+})
 
 // local middleware
 async function check_tag_here (req, res, next) {
+    
     //check that the tag is on the db
     const is_tag_found = await Tags.get_by_name(req.body.tag) 
   if (is_tag_found) {

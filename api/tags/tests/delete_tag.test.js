@@ -16,4 +16,13 @@ const url = "/tags/"
 
 it.todo("only accept alphanumeric inputs ")
 it.todo("resp with a valid msg if there is no tag to delete")
-it.todo("delete a tag")
+it("delete a tag", async () => {
+    // request server
+    const res = await request(server).delete(url).send({tag: "frontend"})
+
+    // validate resp
+    console.log(res.body)
+    expect(res.status).toBe(200)
+
+
+})

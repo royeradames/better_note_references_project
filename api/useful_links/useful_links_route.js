@@ -123,18 +123,43 @@ router.put("/:id", [
     param("id")
         .isNumeric().withMessage("must be numeric")
     ,
-], handle_fail_valitions, check_id, async(req, res, next) => {
-    //run sql to update id
+], handle_fail_valitions, check_id, collected_link_data, async(req, res, next) => {
+    try {
+        //run sql to update id
+        const updated_useful_link = await Useful_links.update_by_id(req.params.id, req.collected_link_data) 
 
-    // res with name previous and updated useful_link info
+        // res with name previous and updated useful_link info
+        res.status(200).json(updated_useful_link)
+
+
+    } catch (error) {
+        next("something is wrong in update resource")
+    }
+
+
 })
 
 // todo: create delete resource by id
 
 // local middleware
+async function collected_link_data(req, res, next) {
+    try {
+        //construct new link data 
+        //must have data
+        const collected_link_data = {
+        name: req.body.name,
+        url: req.body.url,
+        tag_name: req.body.tag_name,
+        }
+        req.collected_link_data = collected_link_data
+        next()
+    } catch (error) {
+        next("Something is wrong in collected_link_data")
+    }
+}
 async function check_id(req, res, next) {
     try {
-        //get link from db
+        // ;yyyyyyyget link from db
        const useful_link = (await Useful_links.get_by_id(req.params.id))
        if(useful_link){
            req.useful_link = useful_link
@@ -145,7 +170,6 @@ async function check_id(req, res, next) {
        }
     } catch (error) {
         next(error)
-        
     }
 }
 module.exports = router

@@ -24,8 +24,9 @@ it("update a useful_link", async () => {
     })
 
     //validate resp
-   console.log(res.body) 
    expect(res.status).toBe(200)
+   expect(res.body.old_link.name).toMatch(/node.js documentation/i)
+   expect(res.body.updated_link.name).toMatch(/testing updating node doc/i)
 })
 it.todo("only accept valid inputs")
 it.todo("no useful_link")

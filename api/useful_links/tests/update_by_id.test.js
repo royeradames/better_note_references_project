@@ -16,7 +16,12 @@ const url = "/useful_links/"
 
 it("update a useful_link", async () => {
     // request server
-    const res = await request(server).put(`${url}1`)
+    const res = await request(server).put(`${url}1`).send({
+        name: "testing updating node doc",
+        url: "testing.com",
+        tag_name: "frontend",
+
+    })
 
     //validate resp
    console.log(res.body) 

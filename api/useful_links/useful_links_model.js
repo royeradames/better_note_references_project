@@ -7,8 +7,23 @@ module.exports = {
     get_by_id,
     get_by_name,
     new_resource,
+    update_by_id,
 }
 
+async function update_by_id(id, update_data){
+    // collect old useful_link data
+    const old_link = await get_by_id(id)
+    
+    // update useful link
+    await db("useful_links")
+        .where({id})    
+        .update(update_data)
+
+    // collect update useful_link data
+    const updated_link = await get_by_id(id)
+
+    return { old_link, updated_link}
+}
 function get_by_id(id){
     return db("useful_links").where({id}).first()
 }
